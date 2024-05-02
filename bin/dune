@@ -1,0 +1,4 @@
+(executable
+ (public_name nick_lang)
+ (name main)
+ (libraries nick_lang)) 
