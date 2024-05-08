@@ -1,1 +1,1 @@
-bin/syntax.ml: Lexer Parser
+bin/syntax.ml:

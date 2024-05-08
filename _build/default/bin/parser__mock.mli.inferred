@@ -1,0 +1,16 @@
+type token =
+    SEMICOLON
+  | RPAREN
+  | PEPTIDE
+  | PEPID of string
+  | MOLECULE
+  | LT
+  | LPAREN
+  | ID of string
+  | GT
+  | EQUAL
+  | EOF
+val menhir_begin_marker : int
+val xv_toplevel : Syntax.expression
+val xv_expression : Syntax.expression
+val menhir_end_marker : int
