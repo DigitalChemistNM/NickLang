@@ -1,8 +1,0 @@
-lib: [
-  "_build/install/default/lib/nick_lang/META"
-  "_build/install/default/lib/nick_lang/dune-package"
-  "_build/install/default/lib/nick_lang/opam"
-]
-bin: [
-  "_build/install/default/bin/nick_lang.exe"
-]

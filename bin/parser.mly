@@ -2,12 +2,17 @@
 	open Syntax
 %}
 
+%token <float> FLOAT
+%token <int> NUMERAL
 %token <string> ID
 %token <string> PEPID
 %token <string> MOLID
 %token PEPTIDE
 %token MOLECULE
 %token SOLVENT
+%token SOLUTION
+%token IN
+%token MM
 %token LPAREN
 %token RPAREN
 %token EQUAL
@@ -37,3 +42,5 @@ expression:
 | PEPTIDE var = ID EQUAL LT var2 = PEPID GT {Peptide (var, var2)}
 | MOLECULE var = ID EQUAL LPAREN var2 = MOLID RPAREN {Molecule (var, var2)}
 | SOLVENT var = ID {Solvent var}
+| SOLUTION var = ID EQUAL var2 = ID LPAREN var3 = FLOAT MM RPAREN IN var4 = ID {Solution (var, var2, var3, var4)}
+

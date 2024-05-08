@@ -1,3 +1,11 @@
-peptide a = <TVAGGGHLYSCVVHYK>; 
+peptide a = <NICKISEPIC>;
 
 molecule malemide = (C4H2NO2); 
+
+solvent water; 
+
+solvent dmso; 
+
+solution peptideinwater = a(0.1 mM) in water
+
+
