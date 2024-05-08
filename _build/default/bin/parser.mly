@@ -1,5 +1,5 @@
 %{
-  open Syntax
+	open Syntax
 %}
 
 %token <string> ID
@@ -13,6 +13,7 @@
 %token EQUAL
 %token LT
 %token GT
+
 %token SEMICOLON
 %token EOF
 
@@ -31,10 +32,8 @@ toplevel: e = expression EOF
   { e }
 ;
 
-
 expression: 
 | e1 = expression SEMICOLON e2 = expression {Sequence (e1, e2)}
 | PEPTIDE var = ID EQUAL LT var2 = PEPID GT {Peptide (var, var2)}
 | MOLECULE var = ID EQUAL LPAREN var2 = MOLID RPAREN {Molecule (var, var2)}
 | SOLVENT var = ID {Solvent var}
-(*| SOLUTION var = ID EQUAL var2=ID LBRACE var3 = FLOAT MM RBRACE IN var4 = ID {Solution (var, var2, var3, var4)}*)

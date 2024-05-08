@@ -40,7 +40,7 @@ include MenhirBasics
 
 # 1 "bin/parser.mly"
   
-  open Syntax
+	open Syntax
 
 # 46 "bin/parser.ml"
 
@@ -97,7 +97,7 @@ let _menhir_action_4 =
 let _menhir_action_5 =
   fun e ->
     (
-# 31 "bin/parser.mly"
+# 32 "bin/parser.mly"
   ( e )
 # 103 "bin/parser.ml"
      : (Syntax.expression))

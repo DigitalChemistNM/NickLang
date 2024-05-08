@@ -2,6 +2,9 @@
 	open Syntax
 %}
 
+
+%token <int> INT
+%token <float> FLOAT
 %token <string> ID
 %token <string> PEPID
 %token <string> MOLID
@@ -13,8 +16,12 @@
 %token EQUAL
 %token LT
 %token GT
-
-%token SEMICOLON
+%token COMMA
+%token RPAREN
+%token LPAREN
+%token LBRACE
+%token RBRACE
+%token UNDERSCORE
 %token EOF
 
 /* Precedence */
@@ -22,13 +29,13 @@
 
 /* Top level rule */
 %start toplevel
-%type <Syntax.expression> toplevel 
+%type <Syntax.expression list> toplevel 
 
 %%
 
 /* Grammar */
 
-toplevel: e = expression EOF
+toplevel: e = separated_nonempty_list(SEMICOLON, expression); EOF
   { e }
 ;
 

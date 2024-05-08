@@ -3,7 +3,7 @@
  (name main)
  (libraries nick_lang)) 
 
-(menhir
+ (menhir
   (modules parser))
 
 (ocamllex lexer)

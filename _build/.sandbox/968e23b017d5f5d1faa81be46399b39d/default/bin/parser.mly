@@ -13,6 +13,7 @@
 %token EQUAL
 %token LT
 %token GT
+%token COMMA
 
 %token SEMICOLON
 %token EOF
@@ -22,13 +23,13 @@
 
 /* Top level rule */
 %start toplevel
-%type <Syntax.expression> toplevel 
+%type <Syntax.expression list> toplevel 
 
 %%
 
 /* Grammar */
 
-toplevel: e = expression EOF
+toplevel: e = separated_nonempty_list(SEMICOLON, expression); EOF
   { e }
 ;
 
