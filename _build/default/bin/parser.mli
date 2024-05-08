@@ -2,10 +2,12 @@
 (* The type of tokens. *)
 
 type token = 
+  | SOLVENT
   | SEMICOLON
   | RPAREN
   | PEPTIDE
   | PEPID of (string)
+  | MOLID of (string)
   | MOLECULE
   | LT
   | LPAREN

@@ -1,8 +1,10 @@
 type token =
-    SEMICOLON
+    SOLVENT
+  | SEMICOLON
   | RPAREN
   | PEPTIDE
   | PEPID of string
+  | MOLID of string
   | MOLECULE
   | LT
   | LPAREN
