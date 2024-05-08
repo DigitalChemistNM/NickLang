@@ -1,1 +1,11 @@
 peptide a = <TVAGGGHLYSCVVHYK>; 
+
+molecule malemide = (C4H2NO2); 
+
+solvent water;
+
+solvent DMSO;
+
+solution peptideInWater = a{0.1mM} in water; 
+
+solution malemideInDmso = b{0.1 mM} in DMSO; 

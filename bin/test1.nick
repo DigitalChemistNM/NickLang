@@ -1,0 +1,3 @@
+peptide a = <TVAGGGHLYSCVVHYK>;
+
+molecule malemide = (C4H2NO2); 

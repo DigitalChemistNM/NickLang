@@ -2,3 +2,8 @@
  (public_name nick_lang)
  (name main)
  (libraries nick_lang)) 
+
+(menhir
+  (modules parser))
+
+(ocamllex lexer)
