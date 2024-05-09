@@ -6,6 +6,6 @@ solvent water;
 
 solvent dmso; 
 
-solution peptideinwater = a(0.1 mM) in water
+solution peptideinwater = a(0.1 mM) in water;
 
-
+solution malemideindmso = b(0.1 mM) in dmso

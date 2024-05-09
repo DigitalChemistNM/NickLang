@@ -13,5 +13,5 @@ let rec print_expr e =
   | Peptide (s, t) -> print_string s; print_string " "; print_string t; print_newline()
   | Molecule (s, t) -> print_string s; print_string " "; print_string t; print_newline()
   | Solvent (s)  -> print_string s; print_newline()
-  | Solution (s, t, f, l) -> print_string s; print_newline(); print_string t; print_newline(); print_float f; print_newline(); print_string l; print_newline()
+  | Solution (s, t, f, l) -> print_string s; print_string " "; print_string t; print_string " "; print_float f; print_string " "; print_string l; print_newline()
 
