@@ -27,7 +27,7 @@ type amino_acid =
       formula; 
       smiles;
     }
-    | _ -> failwith "Invalid" 
+    | _ -> failwith "You suck at coding" 
 
 
 (*function to read in CSV*)

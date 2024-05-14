@@ -12,4 +12,8 @@ solution malemideindmso = b(0.1 mM) in dmso;
 
 calculate_average_mass <NICKISEPIC>; 
 
-generate_smiles <NICKISEPIC>
+generate_smiles <NICKISEPIC>; 
+
+protocol conjugate  p m {
+    peptide b  = <HESSAMISEPIC>;
+}

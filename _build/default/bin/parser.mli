@@ -6,6 +6,8 @@ type token =
   | SOLUTION
   | SEMICOLON
   | RPAREN
+  | RBRACE
+  | PROTOCOL
   | PEPTIDE
   | PEPID of (string)
   | NUMERAL of (int)
@@ -14,6 +16,7 @@ type token =
   | MM
   | LT
   | LPAREN
+  | LBRACE
   | IN
   | ID of (string)
   | GT

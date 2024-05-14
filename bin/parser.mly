@@ -11,12 +11,15 @@
 %token MOLECULE
 %token SOLVENT
 %token SOLUTION
+%token PROTOCOL
 %token IN
 %token MM
 %token CALCULATE_AVERAGE_MASS
 %token GENERATE_SMILES
 %token LPAREN
 %token RPAREN
+%token LBRACE
+%token RBRACE
 %token EQUAL
 %token LT
 %token GT
@@ -39,6 +42,10 @@ toplevel: e = expression EOF
   { e }
 ;
 
+arglist:
+| var = ID rest = arglist {Arglist(var, rest)}
+
+
 expression: 
 | e1 = expression SEMICOLON e2 = expression {Sequence (e1, e2)}
 | PEPTIDE var = ID EQUAL LT var2 = PEPID GT {Peptide (var, var2)}
@@ -46,5 +53,7 @@ expression:
 | SOLVENT var = ID {Solvent var}
 | SOLUTION var = ID EQUAL var2 = ID LPAREN var3 = FLOAT MM RPAREN IN var4 = ID {Solution (var, var2, var3, var4)}
 | CALCULATE_AVERAGE_MASS LT var = PEPID GT {CalculateAverageMass (var)}
-| GENERATE_SMILES LT var = PEPID GT {GenerateSmiles (var)}
+| GENERATE_SMILES LT var = PEPID GT {GenerateSmiles (var)} 
+| PROTOCOL var = ID args = arglist LBRACE body = expression RBRACE   {Protocol (var, args, body)}
+
 

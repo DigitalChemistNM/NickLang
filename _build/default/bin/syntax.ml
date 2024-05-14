@@ -1,5 +1,9 @@
 open Aminoacids 
 
+type arglist = 
+ | Nil
+ | Arglist of string * arglist
+
 type expression =
   | Sequence of expression * expression
   | Peptide of string * string
@@ -8,8 +12,12 @@ type expression =
   | Solution of string * string * float * string
   | CalculateAverageMass of string
   | GenerateSmiles of string
+  | Protocol of string * arglist * expression
 
-
+  let rec print_arglist a = 
+    match a with
+    | Nil -> ()
+    | Arglist (s, a) -> print_string s; print_string " "; print_arglist a
 
 let rec eval_expr e = 
   match e with
@@ -20,3 +28,5 @@ let rec eval_expr e =
   | Solution (s, t, f, l) -> print_string s; print_string " "; print_string t; print_string " "; print_float f; print_string " "; print_string l; print_newline()
   | CalculateAverageMass (s) -> let x = calculate_mass s in print_float x; print_newline()
   | GenerateSmiles (s) -> let x = generate_smiles s in print_string x; print_newline()
+  | Protocol (s, a, e) -> print_string s; print_string " ";  print_arglist a ; eval_expr e 
+

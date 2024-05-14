@@ -3,6 +3,8 @@ type token =
   | SOLUTION
   | SEMICOLON
   | RPAREN
+  | RBRACE
+  | PROTOCOL
   | PEPTIDE
   | PEPID of string
   | NUMERAL of int
@@ -11,6 +13,7 @@ type token =
   | MM
   | LT
   | LPAREN
+  | LBRACE
   | IN
   | ID of string
   | GT
@@ -22,4 +25,5 @@ type token =
 val menhir_begin_marker : int
 val xv_toplevel : Syntax.expression
 val xv_expression : Syntax.expression
+val xv_arglist : Syntax.arglist
 val menhir_end_marker : int
