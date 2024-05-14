@@ -1,7 +1,7 @@
 open Aminoacids 
 
 type arglist = 
- | Nil
+ | EmptyArglist
  | Arglist of string * arglist
 
 type expression =
@@ -16,7 +16,7 @@ type expression =
 
   let rec print_arglist a = 
     match a with
-    | Nil -> ()
+    | EmptyArglist -> ()
     | Arglist (s, a) -> print_string s; print_string " "; print_arglist a
 
 let rec eval_expr e = 

@@ -44,6 +44,7 @@ toplevel: e = expression EOF
 
 arglist:
 | var = ID rest = arglist {Arglist(var, rest)}
+|  { EmptyArglist }
 
 
 expression: 

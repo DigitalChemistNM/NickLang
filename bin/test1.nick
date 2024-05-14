@@ -16,4 +16,5 @@ generate_smiles <NICKISEPIC>;
 
 protocol conjugate  p m {
     peptide b  = <HESSAMISEPIC>;
+    peptide c = <ARCHYISEPIC>
 }
