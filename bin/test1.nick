@@ -8,4 +8,8 @@ solvent dmso;
 
 solution peptideinwater = a(0.1 mM) in water;
 
-solution malemideindmso = b(0.1 mM) in dmso
+solution malemideindmso = b(0.1 mM) in dmso; 
+
+calculate_average_mass <NICKISEPIC>; 
+
+generate_smiles <NICKISEPIC>
