@@ -1,0 +1,16 @@
+# dune build
+# OCAMLPARAM: unset
+# Shared cache: disabled
+# Shared cache location: /home/nick/.cache/dune/db
+# Workspace root: /home/nick/NickLang
+# Auto-detected concurrency: 12
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /nix/store/y5wh3nnm63razx58h436m20ylakp957d-ocaml-5.1.1/bin/ocamlc.opt -config > /run/user/1000/dune_44269a_output

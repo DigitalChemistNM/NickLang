@@ -16,5 +16,11 @@ generate_smiles <NICKISEPIC>;
 
 protocol conjugate  p m {
     peptide b  = <HESSAMISEPIC>;
-    peptide c = <ARCHYISEPIC>
+    peptide c = <ARCHYISEPIC>;
+    solvent water;
+    solvent dmso;
+    solution peptideinwater = a(0.1 mM) in water;
+    solution malemideindmso = b(0.1 mM) in dmso
+
+    
 }
