@@ -11,17 +11,26 @@ type token =
   | MOLID of string
   | MOLECULE
   | MM
+  | MINUTES
   | LT
   | LPAREN
+  | LOCATION
   | LBRACE
   | IN
   | ID of string
   | GT
   | GENERATE_SMILES
+  | FOR
   | FLOAT of float
+  | FIND
   | EQUAL
   | EOF
+  | DISPENSE
+  | COMBINE
   | CALCULATE_AVERAGE_MASS
+  | AT
+  | AND
+  | AGITATE
 val menhir_begin_marker : int
 val xv_toplevel : Syntax.expression
 val xv_expression : Syntax.expression

@@ -138,5 +138,5 @@ let y = calculate_monoisotopic_mass peptide_1
 
 let z = generate_smiles peptide_1
 
-let () = print_float x; print_newline(); print_float y; print_newline(); print_string z; print_newline() *)
+let () = print_float x; print_newline(); print_float y; print_newline(); print_string z; print_newline() *) 
 

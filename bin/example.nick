@@ -19,4 +19,20 @@ protocol conjugate p m {
 	solution pAndM = combine(p, m);
 	solution crudeSolution = agitate pAndM for 5h;
 	produces crudeSolution;
-	} 
+	}  
+
+
+protocol combine p m {
+    dispense p;
+    dispense m;
+    move 
+}
+
+protocol conjugate p m location {
+    dispense p;
+    dispense m; 
+    combine p m;
+
+
+    
+}

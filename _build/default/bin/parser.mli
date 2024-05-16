@@ -14,17 +14,26 @@ type token =
   | MOLID of (string)
   | MOLECULE
   | MM
+  | MINUTES
   | LT
   | LPAREN
+  | LOCATION
   | LBRACE
   | IN
   | ID of (string)
   | GT
   | GENERATE_SMILES
+  | FOR
   | FLOAT of (float)
+  | FIND
   | EQUAL
   | EOF
+  | DISPENSE
+  | COMBINE
   | CALCULATE_AVERAGE_MASS
+  | AT
+  | AND
+  | AGITATE
 
 (* This exception is raised by the monolithic API functions. *)
 

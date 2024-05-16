@@ -12,7 +12,16 @@
 %token SOLVENT
 %token SOLUTION
 %token PROTOCOL
+%token DISPENSE
+%token FIND
+%token LOCATION
 %token IN
+%token COMBINE
+%token AND
+%token AT
+%token AGITATE
+%token FOR
+%token MINUTES
 %token MM
 %token CALCULATE_AVERAGE_MASS
 %token GENERATE_SMILES
@@ -56,5 +65,9 @@ expression:
 | CALCULATE_AVERAGE_MASS LT var = PEPID GT {CalculateAverageMass (var)}
 | GENERATE_SMILES LT var = PEPID GT {GenerateSmiles (var)} 
 | PROTOCOL var = ID args = arglist LBRACE body = expression RBRACE   {Protocol (var, args, body)}
+| DISPENSE var = ID {Dispense var}
+| var = ID EQUAL FIND LOCATION {FindLocation(var)}
+| COMBINE var = ID AND var2 = ID AT var3 = ID {Combine(var, var2, var3)}
+| AGITATE var = ID FOR var2 = NUMERAL MINUTES {Agitate(var, var2)}
 
 

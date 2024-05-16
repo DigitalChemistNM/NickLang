@@ -13,6 +13,10 @@ type expression =
   | CalculateAverageMass of string
   | GenerateSmiles of string
   | Protocol of string * arglist * expression
+  | Dispense of string
+  | FindLocation of string
+  | Combine of string * string * string
+  | Agitate of string * int
 
   let rec print_arglist a = 
     match a with
@@ -28,5 +32,9 @@ let rec eval_expr e =
   | Solution (s, t, f, l) -> print_string s; print_string " "; print_string t; print_string " "; print_float f; print_string " "; print_string l; print_newline()
   | CalculateAverageMass (s) -> let x = calculate_mass s in print_float x; print_newline()
   | GenerateSmiles (s) -> let x = generate_smiles s in print_string x; print_newline()
-  | Protocol (s, a, e) -> print_string s; print_string " ";  print_arglist a ; eval_expr e 
+  | Protocol (s, a, e) -> print_string s; print_string " ";  print_arglist a ; eval_expr e
+  | Dispense (v) -> print_string "Dispense "; print_string v; print_newline()
+  | FindLocation(v) -> print_string "FindLocation "; print_string v; print_newline() 
+  | Combine (v1, v2, v3) -> print_string "Combine "; print_string v1; print_string " "; print_string v2; print_string " "; print_string v3; print_newline()
+  | Agitate (v, i) -> print_string "Agitate "; print_string v; print_string " "; print_int i; print_newline()
 

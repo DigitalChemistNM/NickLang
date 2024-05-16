@@ -20,7 +20,16 @@ rule token = parse
   | "mM"            {MM}
   | "calculate_average_mass"  {CALCULATE_AVERAGE_MASS}
   | "generate_smiles"      {GENERATE_SMILES}
-  | "protocol"       {PROTOCOL} 
+  | "protocol"      {PROTOCOL}
+  | "dispense"      {DISPENSE}
+  | "find"          {FIND} 
+  | "location"      {LOCATION}
+  | "combine"       {COMBINE}
+  | "and"           {AND}
+  | "at"            {AT}
+  | "agitate"          {AGITATE}
+  | "for"           {FOR}
+  | "minutes"       {MINUTES}
   | "("             { LPAREN }
   | ")"             { RPAREN }
   | ';' 		        { SEMICOLON }
