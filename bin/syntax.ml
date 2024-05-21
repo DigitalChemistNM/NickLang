@@ -1,4 +1,4 @@
-open Aminoacids 
+open Peptides
 
 type arglist = 
  | EmptyArglist
@@ -26,7 +26,7 @@ type expression =
 let rec eval_expr e = 
   match e with
   | Sequence (e1, e2) -> eval_expr e1; eval_expr e2
-  | Peptide (s, t) -> print_string s; print_string " "; print_string t; print_newline()
+  | Peptide (s, t) -> print_string s; print_string " "; print_string t; print_newline(); add_peptide s t
   | Molecule (s, t) -> print_string s; print_string " "; print_string t; print_newline()
   | Solvent (s)  -> print_string s; print_newline()
   | Solution (s, t, f, l) -> print_string s; print_string " "; print_string t; print_string " "; print_float f; print_string " "; print_string l; print_newline()

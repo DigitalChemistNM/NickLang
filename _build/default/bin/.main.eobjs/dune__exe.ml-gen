@@ -9,8 +9,17 @@ module Lexer = Dune__exe__Lexer
 (** @canonical Dune__exe.Main *)
 module Main = Dune__exe__Main
 
+(** @canonical Dune__exe.Maps *)
+module Maps = Dune__exe__Maps
+
 (** @canonical Dune__exe.Parser *)
 module Parser = Dune__exe__Parser
 
+(** @canonical Dune__exe.Peptides *)
+module Peptides = Dune__exe__Peptides
+
 (** @canonical Dune__exe.Syntax *)
 module Syntax = Dune__exe__Syntax
+
+(** @canonical Dune__exe.Types *)
+module Types = Dune__exe__Types

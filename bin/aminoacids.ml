@@ -48,12 +48,21 @@ let natural_amino_acids = read_csv "aa.csv"
 
 let rec find_amino_acid_by_one_letter_code code amino_acid_list = 
   match amino_acid_list with 
-  | [] -> false 
+  | [] -> raise Not_found
   | aa :: rest -> 
       if aa.one_letter_code = code then 
-        true
+        aa
     else 
       find_amino_acid_by_one_letter_code code rest 
+
+let rec find_amino_acid_by_three_letter_code code amino_acid_list = 
+  match amino_acid_list with 
+  | [] -> raise Not_found
+  | aa :: rest -> 
+      if aa.three_letter_code = code then 
+        aa
+      else 
+        find_amino_acid_by_three_letter_code code rest
       
 
 (*find the mass of a paricular amino acid by its one letter code*)
@@ -91,52 +100,4 @@ let rec find_smiles_by_one_letter_code code amino_acid_list =
     print_char current_char;
     print_newline() 
   done*)
-
-let calculate_mass sequence = 
-  let mass = ref 0.0 in
-  let len = String.length sequence in 
-  for i = 0 to len -1 do 
-    let current_char = sequence.[i] in 
-    let found_mass = find_average_mass_by_one_letter_code current_char natural_amino_acids in 
-    mass := !mass +. found_mass;
-  done;
-  mass := !mass +. 18.01528;
-  !mass 
-
-let calculate_monoisotopic_mass sequence = 
-  let mass = ref 0.0 in
-  let len = String.length sequence in 
-  for i = 0 to len -1 do 
-    let current_char = sequence.[i] in 
-    let found_mass = find_monoisotopic_mass_by_one_letter_code current_char natural_amino_acids in 
-    mass := !mass +. found_mass;
-  done;
-  mass := !mass +. 18.0105;
-  !mass
-
-let remove_last_char str = 
-  let len = String.length str in 
-  let new_str = String.sub str 0 (len - 1) in 
-  new_str 
-
-let generate_smiles sequence = 
-  let smiles = ref "" in 
-  let len = String.length sequence in 
-  for i = 0 to len -1 do 
-    let current_char = sequence.[i] in 
-    let found_smiles = find_smiles_by_one_letter_code current_char natural_amino_acids in 
-    smiles := !smiles ^ remove_last_char(found_smiles);
-  done;
-  smiles := !smiles ^ "O";
-  !smiles
-
-(*let peptide_1 = "NICKISEPIC"
-
-let x = calculate_mass peptide_1 
-
-let y = calculate_monoisotopic_mass peptide_1 
-
-let z = generate_smiles peptide_1
-
-let () = print_float x; print_newline(); print_float y; print_newline(); print_string z; print_newline() *) 
 

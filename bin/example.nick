@@ -14,12 +14,13 @@ calculate_average_mass <NICKISEPIC>;
 
 generate_smiles <NICKISEPIC> 
 
-protocol conjugate p m {
-		
-	solution pAndM = combine(p, m);
-	solution crudeSolution = agitate pAndM for 5h;
-	produces crudeSolution;
-	}  
+protocol conjugate  p m {
+    dispense p; 
+    dispense m;
+    x = find location;
+    combine p and m at x;
+    agitate x for 300 minutes    
+} 
 
 
 protocol combine p m {

@@ -1,1 +1,1 @@
-bin/syntax.ml: Aminoacids
+bin/syntax.ml: Peptides
