@@ -1,1 +1,1 @@
-bin/syntax.ml: Peptides
+bin/syntax.ml: Functions

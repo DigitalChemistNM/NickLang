@@ -1,16 +1,8 @@
-peptide a = <NICKISEPIC>;
+peptide a = <NICKISEPIC>; 
 
-molecule malemide = (C4H2NO2); 
+solvent water
 
-solvent water; 
 
-solvent dmso; 
 
-solution peptideinwater = a(0.1 mM) in water;
 
-solution malemideindmso = b(0.1 mM) in dmso; 
-
-calculate_average_mass <NICKISEPIC>; 
-
-generate_smiles <NICKISEPIC>
 

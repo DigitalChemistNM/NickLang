@@ -1,4 +1,4 @@
-open Peptides
+open Functions
 
 type arglist = 
  | EmptyArglist
@@ -26,9 +26,9 @@ type expression =
 let rec eval_expr e = 
   match e with
   | Sequence (e1, e2) -> eval_expr e1; eval_expr e2
-  | Peptide (s, t) -> print_string s; print_string " "; print_string t; print_newline(); add_peptide s t
+  | Peptide (s, t) -> add_peptide s t
   | Molecule (s, t) -> print_string s; print_string " "; print_string t; print_newline()
-  | Solvent (s)  -> print_string s; print_newline()
+  | Solvent (s)  -> print_string s; print_newline(); add_solvent s
   | Solution (s, t, f, l) -> print_string s; print_string " "; print_string t; print_string " "; print_float f; print_string " "; print_string l; print_newline()
   | CalculateAverageMass (s) -> let x = calculate_mass s in print_float x; print_newline()
   | GenerateSmiles (s) -> let x = generate_smiles s in print_string x; print_newline()
@@ -37,4 +37,3 @@ let rec eval_expr e =
   | FindLocation(v) -> print_string "FindLocation "; print_string v; print_newline() 
   | Combine (v1, v2, v3) -> print_string "Combine "; print_string v1; print_string " "; print_string v2; print_string " "; print_string v3; print_newline()
   | Agitate (v, i) -> print_string "Agitate "; print_string v; print_string " "; print_int i; print_newline()
-

@@ -1,1 +1,1 @@
-bin/aminoacids.ml: List String
+bin/aminoacids.ml: List String Types

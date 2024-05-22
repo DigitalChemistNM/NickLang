@@ -1,1 +1,1 @@
-bin/peptides.ml: Aminoacids Map String
+bin/peptides.ml: Map String Types

@@ -3,6 +3,9 @@
 (** @canonical Dune__exe.Aminoacids *)
 module Aminoacids = Dune__exe__Aminoacids
 
+(** @canonical Dune__exe.Functions *)
+module Functions = Dune__exe__Functions
+
 (** @canonical Dune__exe.Lexer *)
 module Lexer = Dune__exe__Lexer
 
@@ -17,6 +20,9 @@ module Parser = Dune__exe__Parser
 
 (** @canonical Dune__exe.Peptides *)
 module Peptides = Dune__exe__Peptides
+
+(** @canonical Dune__exe.Solvents *)
+module Solvents = Dune__exe__Solvents
 
 (** @canonical Dune__exe.Syntax *)
 module Syntax = Dune__exe__Syntax

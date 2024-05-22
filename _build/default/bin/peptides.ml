@@ -1,4 +1,4 @@
-open Aminoacids 
+open Types
 type peptide = 
   {
     sequence: amino_acid list;
