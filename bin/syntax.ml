@@ -17,6 +17,7 @@ type expression =
   | FindLocation of string
   | Combine of string * string * string
   | Agitate of string * int
+  | Print
 
   let rec print_arglist a = 
     match a with
@@ -28,8 +29,8 @@ let rec eval_expr e =
   | Sequence (e1, e2) -> eval_expr e1; eval_expr e2
   | Peptide (s, t) -> add_peptide s t
   | Molecule (s, t) -> print_string s; print_string " "; print_string t; print_newline()
-  | Solvent (s)  -> print_string s; print_newline(); add_solvent s
-  | Solution (s, t, f, l) -> print_string s; print_string " "; print_string t; print_string " "; print_float f; print_string " "; print_string l; print_newline()
+  | Solvent (s)  ->  add_solvent s
+  | Solution (s, t, f, l) -> add_solution s t f l
   | CalculateAverageMass (s) -> let x = calculate_mass s in print_float x; print_newline()
   | GenerateSmiles (s) -> let x = generate_smiles s in print_string x; print_newline()
   | Protocol (s, a, e) -> print_string s; print_string " ";  print_arglist a ; eval_expr e
@@ -37,3 +38,4 @@ let rec eval_expr e =
   | FindLocation(v) -> print_string "FindLocation "; print_string v; print_newline() 
   | Combine (v1, v2, v3) -> print_string "Combine "; print_string v1; print_string " "; print_string v2; print_string " "; print_string v3; print_newline()
   | Agitate (v, i) -> print_string "Agitate "; print_string v; print_string " "; print_int i; print_newline()
+  | Print -> print_maps()

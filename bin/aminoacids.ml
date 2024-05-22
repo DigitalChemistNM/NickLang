@@ -1,3 +1,5 @@
+(*The purpose of this module is to parse a CSV file and populate a list of amino acids. 
+Currently this only includes the 20 naturally occuring amino acids but there is scope to expand this*)
 open Types
 
 (*function for parsing lines of the CSV file and creating an amino acid type with the info populated*)

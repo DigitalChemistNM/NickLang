@@ -30,6 +30,7 @@ rule token = parse
   | "agitate"          {AGITATE}
   | "for"           {FOR}
   | "minutes"       {MINUTES}
+  | "print"         {PRINT}
   | "("             { LPAREN }
   | ")"             { RPAREN }
   | ';' 		        { SEMICOLON }

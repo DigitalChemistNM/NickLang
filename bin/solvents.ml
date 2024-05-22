@@ -1,3 +1,4 @@
+(*The purpose of this module is to parse a CSV and generate a list of solvents that can be used*)
 open Types
 let parse_line_solvent line = 
   match String.split_on_char ',' line with 

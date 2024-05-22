@@ -25,6 +25,7 @@
 %token MM
 %token CALCULATE_AVERAGE_MASS
 %token GENERATE_SMILES
+%token PRINT
 %token LPAREN
 %token RPAREN
 %token LBRACE
@@ -69,5 +70,6 @@ expression:
 | var = ID EQUAL FIND LOCATION {FindLocation(var)}
 | COMBINE var = ID AND var2 = ID AT var3 = ID {Combine(var, var2, var3)}
 | AGITATE var = ID FOR var2 = NUMERAL MINUTES {Agitate(var, var2)}
+| PRINT {Print}
 
 

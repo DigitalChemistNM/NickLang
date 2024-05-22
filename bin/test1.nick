@@ -1,6 +1,10 @@
 peptide a = <NICKISEPIC>; 
 
-solvent water
+solvent water; 
+
+solution x = a (0.1 mM) in water; 
+
+print
 
 
 
