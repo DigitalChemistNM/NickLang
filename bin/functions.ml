@@ -41,14 +41,16 @@ let find_smiles_by_one_letter_code c amino_acid_list =
 
 
 let calculate_peptide_mass sequence =
-  let total_mass = List.fold_left(fun acc aa -> acc  +. find_average_mass_by_one_letter_code aa.one_letter_code natural_amino_acids ) 0.0  sequence in
-  total_mass +. 18.01528
+  let total_mass = List.fold_left(fun acc aa ->
+      acc  +. find_average_mass_by_one_letter_code aa.one_letter_code natural_amino_acids ) 0.0  sequence in
+      total_mass +. 18.01528
 
 (*same as above for monoisotopic*)
 
 let calculate_peptide_monoisotopic_mass sequence =
-  let total_mass = List.fold_left(fun acc aa -> acc  +. find_monoisotopic_mass_by_one_letter_code aa.one_letter_code natural_amino_acids ) 0.0  sequence in
-  total_mass +. 18.0105
+  let total_mass = List.fold_left(fun acc aa ->
+      acc  +. find_monoisotopic_mass_by_one_letter_code aa.one_letter_code natural_amino_acids ) 0.0  sequence in
+      total_mass +. 18.0105
 
 
 (*This function is neccesary for combing smiles strings of amino acids to form the smiles string of a peptide
@@ -62,7 +64,7 @@ let calculate_peptide_monoisotopic_mass sequence =
 
 let generate_smiles sequence =
   let smiles = List.fold_left(fun acc aa -> acc  ^ remove_last_char(find_smiles_by_one_letter_code aa.one_letter_code natural_amino_acids)) ""  sequence in
-  smiles
+  smiles ^ "O"
 
   
 (*This function constructs a sequence, which is a list of amino_acids, from an string input of just the one letter code*)
