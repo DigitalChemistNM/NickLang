@@ -99,23 +99,23 @@ module PepKey =
 
 
 
-module PepMap = Map.Make(PepKey) 
-    
-let user_defined_peptides = ref PepMap.empty
+module PepMap = Map.Make(PepKey)
+
+let user_peptides = PepMap.empty
+
 
 (*This function adds user declared peptides to map*)
-let add_peptide name sequence = 
+let add_peptide name sequence map  =
   let peptide = construct_peptide sequence in 
   let key = name in 
-  user_defined_peptides := PepMap.add key peptide !user_defined_peptides;
-  ()
+  PepMap.add key peptide map
 
   
-let find_peptide_by_name name = 
+let find_peptide_by_name name map =
   try 
-    PepMap.find name !user_defined_peptides
+    PepMap.find name map
   with 
-  | Not_found -> raise Not_found
+   | Not_found -> raise Not_found
 
 (*Same logic as above for solvents*)
   module SolventKey =
@@ -124,21 +124,28 @@ let find_peptide_by_name name =
     let compare = compare
   end
             
-module SolventMap = Map.Make(SolventKey) 
-    
-let user_defined_solvents = ref SolventMap.empty  
+module SolventMap = Map.Make(SolventKey)
 
-let find_solvent_by_name name = 
+let user_solvents = SolventMap.empty
+
+let find_solvent_from_list name =
   try
   List.find (fun x -> x.name = name) solvent_list
   with 
   | Not_found -> raise Not_found
 
-let add_solvent name =
+let add_solvent name map =
   let key = name in
-  let solvent = find_solvent_by_name name in  
-  user_defined_solvents := SolventMap.add key solvent !user_defined_solvents;
-  ()
+  let solvent = find_solvent_from_list name in
+  SolventMap.add key solvent map
+
+let find_solvent_by_name name map =
+  try
+    SolventMap.find name map
+  with
+  | Not_found -> raise Not_found
+
+
 (*Same logic as above for solutions*)
 module SolutionKey =
   struct
@@ -148,11 +155,11 @@ module SolutionKey =
             
 module SolutionMap = Map.Make(SolutionKey) 
     
-let user_defined_solutions = ref SolutionMap.empty 
+let user_defined_solutions =SolutionMap.empty
 
-let add_solution name solute concentration solvent =  
-  let solute = find_peptide_by_name solute in
-  let solvent = find_solvent_by_name solvent in
+let add_solution name solute concentration solvent map =
+  let solute = find_peptide_by_name solute user_peptides in
+  let solvent = find_solvent_by_name solvent user_solvents in
   let concentration = concentration in
   let key = name in 
   let solution ={
@@ -160,44 +167,12 @@ let add_solution name solute concentration solvent =
     solvent;
     concentration;
   } in  
-  user_defined_solutions := SolutionMap.add key solution !user_defined_solutions;
-  () 
+  SolutionMap.add key solution map
 
-let find_solution_by_name name =
+let find_solution_by_name name map =
   try 
-    SolutionMap.find name !user_defined_solutions
+    SolutionMap.find name map
   with 
-  | Not_found -> raise Not_found  
+    | Not_found -> raise Not_found
 
 (*this function is just for print debugging*)
-let print_maps () = 
-  let print_peptides () = 
-    PepMap.iter (fun key value -> 
-      print_string key;
-      print_string " : ";
-      print_string (String.concat "" (List.map (fun x -> String.make 1 x.one_letter_code) value.sequence |> List.rev));
-      print_newline();
-    ) !user_defined_peptides in 
-  let print_solvents () = 
-    SolventMap.iter (fun key value -> 
-      print_string key;
-      print_string " : ";
-      print_string value.name;
-      print_newline();
-    ) !user_defined_solvents in 
-  let print_solutions () = 
-    SolutionMap.iter (fun key value -> 
-      print_string key;
-      print_string " : ";
-      print_string " ";
-      print_string (string_of_float value.concentration);
-      print_string " ";
-      print_string (String.concat "" (List.map (fun x -> String.make 1 x.one_letter_code) value.solute.sequence |> List.rev));
-      print_string " in ";
-      print_string value.solvent.name;
-      print_newline();
-    ) !user_defined_solutions in 
-  print_peptides ();
-  print_solvents  ();
-  print_solutions ()
-
