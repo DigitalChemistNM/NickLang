@@ -57,6 +57,8 @@ arglist:
 |  { EmptyArglist }
 
 
+
+
 expression: 
 | e1 = expression SEMICOLON e2 = expression {Sequence (e1, e2)}
 | PEPTIDE var = ID EQUAL LT var2 = PEPID GT {Peptide (var, var2)}
@@ -71,5 +73,3 @@ expression:
 | COMBINE var = ID AND var2 = ID AT var3 = ID {Combine(var, var2, var3)}
 | AGITATE var = ID FOR var2 = NUMERAL MINUTES {Agitate(var, var2)}
 | PRINT {Print}
-
-

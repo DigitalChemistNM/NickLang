@@ -144,7 +144,7 @@ let _menhir_action_02 =
 let _menhir_action_03 =
   fun e1 e2 ->
     (
-# 61 "bin/parser.mly"
+# 63 "bin/parser.mly"
                                             (Sequence (e1, e2))
 # 150 "bin/parser.ml"
      : (Syntax.expression))
@@ -152,7 +152,7 @@ let _menhir_action_03 =
 let _menhir_action_04 =
   fun var var2 ->
     (
-# 62 "bin/parser.mly"
+# 64 "bin/parser.mly"
                                             (Peptide (var, var2))
 # 158 "bin/parser.ml"
      : (Syntax.expression))
@@ -160,7 +160,7 @@ let _menhir_action_04 =
 let _menhir_action_05 =
   fun var var2 ->
     (
-# 63 "bin/parser.mly"
+# 65 "bin/parser.mly"
                                                      (Molecule (var, var2))
 # 166 "bin/parser.ml"
      : (Syntax.expression))
@@ -168,7 +168,7 @@ let _menhir_action_05 =
 let _menhir_action_06 =
   fun var ->
     (
-# 64 "bin/parser.mly"
+# 66 "bin/parser.mly"
                    (Solvent var)
 # 174 "bin/parser.ml"
      : (Syntax.expression))
@@ -176,7 +176,7 @@ let _menhir_action_06 =
 let _menhir_action_07 =
   fun var var2 var3 var4 ->
     (
-# 65 "bin/parser.mly"
+# 67 "bin/parser.mly"
                                                                                (Solution (var, var2, var3, var4))
 # 182 "bin/parser.ml"
      : (Syntax.expression))
@@ -184,7 +184,7 @@ let _menhir_action_07 =
 let _menhir_action_08 =
   fun var ->
     (
-# 66 "bin/parser.mly"
+# 68 "bin/parser.mly"
                                            (CalculateAverageMass (var))
 # 190 "bin/parser.ml"
      : (Syntax.expression))
@@ -192,7 +192,7 @@ let _menhir_action_08 =
 let _menhir_action_09 =
   fun var ->
     (
-# 67 "bin/parser.mly"
+# 69 "bin/parser.mly"
                                     (GenerateSmiles (var))
 # 198 "bin/parser.ml"
      : (Syntax.expression))
@@ -200,7 +200,7 @@ let _menhir_action_09 =
 let _menhir_action_10 =
   fun args body var ->
     (
-# 68 "bin/parser.mly"
+# 70 "bin/parser.mly"
                                                                      (Protocol (var, args, body))
 # 206 "bin/parser.ml"
      : (Syntax.expression))
@@ -208,7 +208,7 @@ let _menhir_action_10 =
 let _menhir_action_11 =
   fun var ->
     (
-# 69 "bin/parser.mly"
+# 71 "bin/parser.mly"
                     (Dispense var)
 # 214 "bin/parser.ml"
      : (Syntax.expression))
@@ -216,7 +216,7 @@ let _menhir_action_11 =
 let _menhir_action_12 =
   fun var ->
     (
-# 70 "bin/parser.mly"
+# 72 "bin/parser.mly"
                                (FindLocation(var))
 # 222 "bin/parser.ml"
      : (Syntax.expression))
@@ -224,7 +224,7 @@ let _menhir_action_12 =
 let _menhir_action_13 =
   fun var var2 var3 ->
     (
-# 71 "bin/parser.mly"
+# 73 "bin/parser.mly"
                                               (Combine(var, var2, var3))
 # 230 "bin/parser.ml"
      : (Syntax.expression))
@@ -232,7 +232,7 @@ let _menhir_action_13 =
 let _menhir_action_14 =
   fun var var2 ->
     (
-# 72 "bin/parser.mly"
+# 74 "bin/parser.mly"
                                               (Agitate(var, var2))
 # 238 "bin/parser.ml"
      : (Syntax.expression))
@@ -240,7 +240,7 @@ let _menhir_action_14 =
 let _menhir_action_15 =
   fun () ->
     (
-# 73 "bin/parser.mly"
+# 75 "bin/parser.mly"
         (Print)
 # 246 "bin/parser.ml"
      : (Syntax.expression))

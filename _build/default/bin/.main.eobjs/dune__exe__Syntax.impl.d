@@ -1,1 +1,1 @@
-bin/syntax.ml: Functions PepMap SolutionMap SolventMap Types
+bin/syntax.ml: Functions PepMap ProtocolMap SolutionMap SolventMap Types

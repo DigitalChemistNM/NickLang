@@ -1,12 +1,17 @@
-peptide a = <NICKISEPIC>; 
+peptide a = <NICKISEPIC>;
 
-solvent water; 
+solvent water;
 
-solution x = a (0.1 mM) in water; 
+solution x = a (0.1 mM) in water;
 
-print
+protocol conjugate p m {
 
+peptide b = <HESSAMISEPIC>;
 
+peptide c = <ARCHYISEPIC>;
 
+solution y = b (0.1 mM) in water;
 
+solution z = c (0.1 mM) in water
 
+}

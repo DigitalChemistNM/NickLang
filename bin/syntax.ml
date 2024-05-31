@@ -1,7 +1,7 @@
 open Functions
 open Types
 
-type arglist = 
+type arglist =
  | EmptyArglist
  | Arglist of string * arglist
 
@@ -20,13 +20,38 @@ type expression =
   | Agitate of string * int
   | Print
 
+type protocol ={
+  name : string;
+  arglist : arglist;
+  expressions: expression
+}
+
+let create_protocol name arglist expressions =
+  let name = name in
+  let arglist = arglist in
+  let expressions = expressions in
+  {
+    name;
+    arglist;
+    expressions;
+  }
+
+let add_protocol protocol map =
+  let key = protocol.name in
+  ProtocolMap.add key protocol map
+
+
+
 type env = {
 
   peptides : peptide PepMap.t;
   solvents : solvent SolventMap.t;
-  solutions : solution SolutionMap.t
+  solutions : solution SolutionMap.t;
+  protocols : protocol ProtocolMap.t
 
 }
+
+
 
 let rec print_arglist a =
     match a with
@@ -39,11 +64,11 @@ let rec eval_expr (e : expression)(env : env): env =
   | Peptide (s, t) -> {env with peptides = add_peptide s t env.peptides}
   (*| Molecule (s, t) -> print_string s; print_string " "; print_string t; print_newline()*)
   | Solvent (s)  -> {env with solvents = add_solvent s env.solvents}
-  | Solution (a, b, c, d) ->{env with solutions = add_solution a b c d  env.solutions}
+  | Solution (a, b, c, d) ->{env with solutions = add_solution a b c d env.peptides env.solvents  env.solutions}
   (* | CalculateAverageMass (s) -> let x = calculate_mass s in print_float x; print_newline()*)
   (*| GenerateSmiles (s) -> let x = generate_smiles s in print_string x; print_newline()*)
- (* | Protocol (s, a, e) -> print_string s; print_string " ";  print_arglist a ; eval_expr e
-  | Dispense (v) -> print_string "Dispense "; print_string v; print_newline()
+  | Protocol (s, a, e) -> {env with protocols = add_protocol(create_protocol s a e) env.protocols  }
+  (*| Dispense (v) -> print_string "Dispense "; print_string v; print_newline()
   | FindLocation(v) -> print_string "FindLocation "; print_string v; print_newline() 
   | Combine (v1, v2, v3) -> print_string "Combine "; print_string v1; print_string " "; print_string v2; print_string " "; print_string v3; print_newline()
   | Agitate (v, i) -> print_string "Agitate "; print_string v; print_string " "; print_int i; print_newline()

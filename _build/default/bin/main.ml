@@ -8,7 +8,7 @@ let print_env (env : env) : unit =
   PepMap.iter (fun key value ->
     print_string key;
     print_string " : ";
-    print_string (String.concat "" (List.map (fun x -> String.make 1 x.one_letter_code) value.sequence |> List.rev));
+    print_string (String.concat "" (List.map (fun x -> String.make 1 x.one_letter_code) value.sequence));
     print_newline();
   ) env.peptides;
 
@@ -29,17 +29,27 @@ let print_env (env : env) : unit =
     print_string " ";
     print_string (string_of_float value.concentration);
     print_string " ";
-    print_string (String.concat "" (List.map (fun x -> String.make 1 x.one_letter_code) value.solute.sequence |> List.rev));
+    print_string (String.concat "" (List.map (fun x -> String.make 1 x.one_letter_code) value.solute.sequence));
     print_string " in ";
     print_string value.solvent.name;
     print_newline();
   ) env.solutions
+
+  (*Print protocls*)
+  (**print_endline "Protocols:";
+  ProtocolMap.iter (fun key value ->
+    print_string key;
+    print_string " : ";
+    print_string value.name;
+    print_newline();
+     )  env.protocols*)
 
 let () =
   let initial_env = {
     peptides = PepMap.empty;
     solvents = SolventMap.empty;
     solutions = SolutionMap.empty;
+    protocols = ProtocolMap.empty
   } in
 
   let lexbuf = Lexing.from_channel stdin in

@@ -101,8 +101,6 @@ module PepKey =
 
 module PepMap = Map.Make(PepKey)
 
-let user_peptides = PepMap.empty
-
 
 (*This function adds user declared peptides to map*)
 let add_peptide name sequence map  =
@@ -125,8 +123,6 @@ let find_peptide_by_name name map =
   end
             
 module SolventMap = Map.Make(SolventKey)
-
-let user_solvents = SolventMap.empty
 
 let find_solvent_from_list name =
   try
@@ -153,13 +149,11 @@ module SolutionKey =
     let compare = compare
   end
             
-module SolutionMap = Map.Make(SolutionKey) 
-    
-let user_defined_solutions =SolutionMap.empty
+module SolutionMap = Map.Make(SolutionKey)
 
-let add_solution name solute concentration solvent map =
-  let solute = find_peptide_by_name solute user_peptides in
-  let solvent = find_solvent_by_name solvent user_solvents in
+let add_solution name solute concentration solvent map1 map2 map3 =
+  let solute = find_peptide_by_name solute map1 in
+  let solvent = find_solvent_by_name solvent map2 in
   let concentration = concentration in
   let key = name in 
   let solution ={
@@ -167,7 +161,7 @@ let add_solution name solute concentration solvent map =
     solvent;
     concentration;
   } in  
-  SolutionMap.add key solution map
+  SolutionMap.add key solution map3
 
 let find_solution_by_name name map =
   try 
@@ -175,4 +169,12 @@ let find_solution_by_name name map =
   with 
     | Not_found -> raise Not_found
 
-(*this function is just for print debugging*)
+module ProtocolKey =
+  struct
+    type t = string
+    let compare = compare
+  end
+
+
+
+module ProtocolMap = Map.Make(ProtocolKey)
