@@ -1,1 +1,1 @@
-bin/parser.ml: Printf Syntax
+bin/parser.ml: Printf Types

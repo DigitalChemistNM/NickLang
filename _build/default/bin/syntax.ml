@@ -1,62 +1,6 @@
-open Functions
 open Types
+open Functions
 
-type arglist =
- | EmptyArglist
- | Arglist of string * arglist
-
-type expression =
-  | Sequence of expression * expression
-  | Peptide of string * string
-  | Molecule of string * string
-  | Solvent of string
-  | Solution of string * string * float * string
-  | CalculateAverageMass of string
-  | GenerateSmiles of string
-  | Protocol of string * arglist * expression
-  | Dispense of string
-  | FindLocation of string
-  | Combine of string * string * string
-  | Agitate of string * int
-  | Print
-
-type protocol ={
-  name : string;
-  arglist : arglist;
-  expressions: expression
-}
-
-let create_protocol name arglist expressions =
-  let name = name in
-  let arglist = arglist in
-  let expressions = expressions in
-  {
-    name;
-    arglist;
-    expressions;
-  }
-
-let add_protocol protocol map =
-  let key = protocol.name in
-  ProtocolMap.add key protocol map
-
-
-
-type env = {
-
-  peptides : peptide PepMap.t;
-  solvents : solvent SolventMap.t;
-  solutions : solution SolutionMap.t;
-  protocols : protocol ProtocolMap.t
-
-}
-
-
-
-let rec print_arglist a =
-    match a with
-    | EmptyArglist -> ()
-    | Arglist (s, a) -> print_string s; print_string " "; print_arglist a
 
 let rec eval_expr (e : expression)(env : env): env =
   match e with

@@ -90,16 +90,6 @@ let construct_sequence aa_sequence =
     }
 
 
-(*A map to keep track of peptide variables declared in scope*)
-module PepKey =
-  struct
-    type t = string
-    let compare = compare
-  end
-
-
-
-module PepMap = Map.Make(PepKey)
 
 
 (*This function adds user declared peptides to map*)
@@ -115,18 +105,11 @@ let find_peptide_by_name name map =
   with 
    | Not_found -> raise Not_found
 
-(*Same logic as above for solvents*)
-  module SolventKey =
-  struct
-    type t = string
-    let compare = compare
-  end
-            
-module SolventMap = Map.Make(SolventKey)
 
-let find_solvent_from_list name =
+
+let find_solvent_from_list name  =
   try
-  List.find (fun x -> x.name = name) solvent_list
+  List.find (fun x -> x.solname = name) solvent_list
   with 
   | Not_found -> raise Not_found
 
@@ -142,14 +125,7 @@ let find_solvent_by_name name map =
   | Not_found -> raise Not_found
 
 
-(*Same logic as above for solutions*)
-module SolutionKey =
-  struct
-    type t = string
-    let compare = compare
-  end
-            
-module SolutionMap = Map.Make(SolutionKey)
+
 
 let add_solution name solute concentration solvent map1 map2 map3 =
   let solute = find_peptide_by_name solute map1 in
@@ -169,12 +145,60 @@ let find_solution_by_name name map =
   with 
     | Not_found -> raise Not_found
 
-module ProtocolKey =
-  struct
-    type t = string
-    let compare = compare
-  end
+
+let create_protocol name arglist expressions =
+  let name = name in
+  let arglist = arglist in
+  let expressions = expressions in
+  {
+    name;
+    arglist;
+    expressions;
+  }
+
+let add_protocol protocol map =
+  let key = protocol.name in
+  ProtocolMap.add key protocol map
 
 
+let print_env (env : env) : unit =
+  (* Print peptides *)
+  print_endline "Peptides:";
+  PepMap.iter (fun key (value : peptide) ->
+    print_string key;
+    print_string " : ";
+    print_string (String.concat "" (List.map (fun x -> String.make 1 x.one_letter_code) value.sequence));
+    print_newline();
+  ) env.peptides;
 
-module ProtocolMap = Map.Make(ProtocolKey)
+  (* Print solvents *)
+  print_endline "Solvents:";
+  SolventMap.iter (fun key value ->
+    print_string key;
+     print_string " : ";
+     print_string value.solname;
+    print_newline();
+  ) env.solvents;
+
+  (* Print solutions *)
+  print_endline "Solutions:";
+  SolutionMap.iter (fun key value ->
+    print_string key;
+    print_string " : ";
+    print_string " ";
+    print_string (string_of_float value.concentration);
+    print_string " ";
+    print_string (String.concat "" (List.map (fun x -> String.make 1 x.one_letter_code) value.solute.sequence));
+    print_string " in ";
+    print_string value.solvent.solname;
+    print_newline();
+  ) env.solutions;
+
+  (*Print protocls*)
+  print_endline "Protocols:";
+  ProtocolMap.iter (fun key (value : protocol) ->
+    print_string key;
+    print_string " : ";
+    print_string value.name;
+    print_newline();
+     )  env.protocols

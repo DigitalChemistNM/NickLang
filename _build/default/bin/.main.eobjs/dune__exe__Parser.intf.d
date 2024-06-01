@@ -1,1 +1,1 @@
-bin/parser.mli: Lexing Syntax
+bin/parser.mli: Lexing Types

@@ -1,5 +1,6 @@
+
 %{
-	open Syntax
+  open Types
 %}
 
 %token <float> FLOAT
@@ -26,6 +27,7 @@
 %token CALCULATE_AVERAGE_MASS
 %token GENERATE_SMILES
 %token PRINT
+%token CALL
 %token LPAREN
 %token RPAREN
 %token LBRACE
@@ -42,7 +44,7 @@
 
 /* Top level rule */
 %start toplevel
-%type <Syntax.expression> toplevel 
+%type <Types.expression> toplevel
 
 %%
 
@@ -73,3 +75,4 @@ expression:
 | COMBINE var = ID AND var2 = ID AT var3 = ID {Combine(var, var2, var3)}
 | AGITATE var = ID FOR var2 = NUMERAL MINUTES {Agitate(var, var2)}
 | PRINT {Print}
+| CALL var = ID {Call(var)}

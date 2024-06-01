@@ -28,12 +28,13 @@ type token =
   | EOF
   | DISPENSE
   | COMBINE
+  | CALL
   | CALCULATE_AVERAGE_MASS
   | AT
   | AND
   | AGITATE
 val menhir_begin_marker : int
-val xv_toplevel : Syntax.expression
-val xv_expression : Syntax.expression
-val xv_arglist : Syntax.arglist
+val xv_toplevel : Types.expression
+val xv_expression : Types.expression
+val xv_arglist : Types.arglist
 val menhir_end_marker : int

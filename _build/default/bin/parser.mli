@@ -31,6 +31,7 @@ type token =
   | EOF
   | DISPENSE
   | COMBINE
+  | CALL
   | CALCULATE_AVERAGE_MASS
   | AT
   | AND
@@ -42,4 +43,4 @@ exception Error
 
 (* The monolithic API. *)
 
-val toplevel: (Lexing.lexbuf -> token) -> Lexing.lexbuf -> (Syntax.expression)
+val toplevel: (Lexing.lexbuf -> token) -> Lexing.lexbuf -> (Types.expression)

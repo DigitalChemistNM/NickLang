@@ -2,9 +2,9 @@
 open Types
 let parse_line_solvent line = 
   match String.split_on_char ',' line with 
-  | [name; formula; polar; protic ] ->
+  | [solname; formula; polar; protic ] ->
     {
-      name;
+     solname;
       formula;
       polar = bool_of_string polar;
       protic = bool_of_string protic;
@@ -26,4 +26,4 @@ let read_csv filename =
       read_lines []
 
 (*create a list of amino_acids that comprise of the 20 naturally ocurring ones*)
-let solvent_list = read_csv "solvents.csv"  
+let solvent_list = read_csv "solvents.csv"

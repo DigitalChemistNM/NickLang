@@ -25,7 +25,7 @@ type amino_acid =
 
 type solvent = 
   {
-    name: string;
+    solname: string;
     formula: string;
     protic: bool; 
     polar: bool;
@@ -35,4 +35,80 @@ type solution = {
   solute: peptide;
   solvent: solvent;
   concentration: float;
+}
+
+type arglist =
+ | EmptyArglist
+ | Arglist of string * arglist
+
+type expression =
+  | Sequence of expression * expression
+  | Peptide of string * string
+  | Molecule of string * string
+  | Solvent of string
+  | Solution of string * string * float * string
+  | CalculateAverageMass of string
+  | GenerateSmiles of string
+  | Protocol of string * arglist * expression
+  | Dispense of string
+  | FindLocation of string
+  | Combine of string * string * string
+  | Agitate of string * int
+  | Print
+  | Call of string
+
+
+type protocol ={
+  name : string;
+  arglist : arglist;
+  expressions: expression
+}
+
+
+ (*A map to keep track of peptide variables declared in scope*)
+module PepKey =
+  struct
+    type t = string
+    let compare = compare
+  end
+
+
+module PepMap = Map.Make(PepKey)
+
+(*Same logic as above for solvents*)
+  module SolventKey =
+  struct
+    type t = string
+    let compare = compare
+  end
+
+module SolventMap = Map.Make(SolventKey)
+
+ (*for solutions*)
+module SolutionKey =
+  struct
+    type t = string
+    let compare = compare
+  end
+
+module SolutionMap = Map.Make(SolutionKey)
+
+(*maps to keep track of user protocols*)
+
+module ProtocolKey =
+  struct
+    type t = string
+    let compare = compare
+  end
+
+module ProtocolMap = Map.Make(ProtocolKey)
+
+
+type env = {
+
+  peptides : peptide PepMap.t;
+  solvents : solvent SolventMap.t;
+  solutions : solution SolutionMap.t;
+  protocols : protocol ProtocolMap.t
+
 }
