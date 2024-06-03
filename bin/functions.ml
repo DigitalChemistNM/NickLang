@@ -160,6 +160,12 @@ let add_protocol protocol map =
   let key = protocol.name in
   ProtocolMap.add key protocol map
 
+let retrieve__protocol name map =
+  try
+    ProtocolMap.find name map
+  with
+  | Not_found -> raise Not_found
+
 
 let print_env (env : env) : unit =
   (* Print peptides *)
