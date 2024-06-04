@@ -29,6 +29,7 @@
 %token PRINT
 %token CALL
 %token CONTAINS
+%token TO
 %token LPAREN
 %token RPAREN
 %token LBRACE
@@ -71,11 +72,11 @@ expression:
 | CALCULATE_AVERAGE_MASS LT var = PEPID GT {CalculateAverageMass (var)}
 | GENERATE_SMILES LT var = PEPID GT {GenerateSmiles (var)} 
 | PROTOCOL var = ID args = arglist LBRACE body = expression RBRACE   {Protocol (var, args, body)}
-| DISPENSE var = ID {Dispense var}
 | var = ID EQUAL FIND LOCATION {FindLocation(var)}
 | COMBINE var = ID AND var2 = ID AT var3 = ID {Combine(var, var2, var3)}
 | AGITATE var = ID FOR var2 = NUMERAL MINUTES {Agitate(var, var2)}
 | PRINT {Print}
 | CALL var = ID {Call(var)}
 | LOCATION var = NUMERAL{Location(var)}
-| var = NUMERAL CONTAINS var2 = ID{Contains(var,var2)}
+| LOCATION var = NUMERAL CONTAINS var2 = ID{Contains(var, var2)}
+| DISPENSE LOCATION var = NUMERAL TO LOCATION var2= NUMERAL {Dispense(var,var2)}

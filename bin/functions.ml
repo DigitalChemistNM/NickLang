@@ -166,12 +166,12 @@ let retrieve__protocol name map =
   with
   | Not_found -> raise Not_found
 
-let add_location name map =
-  let key = name in
+let add_location no map =
+  let key = no in
   let id = Random.int 1000 in
   let location =
   {
-    name;
+    no;
     id;
     contains = []
   } in
@@ -183,14 +183,32 @@ let retrieve_location name map =
   with
   | Not_found -> raise Not_found
 
-(**let add_solution_to_location  solution_name location_name loc_map sol_map =
-  let location = retrieve_location location_name loc_map in
-  let solution = find_solution_by_name solution_name sol_map in
-  let lst = [solution] in
-   location.solutions = location.solutions @ lst*)
+let add_solutions_to_location sol loc_name loc_map =
+    let no = (retrieve_location loc_name loc_map).no in
+    let key = no in
+    let id = (retrieve_location loc_name loc_map).id in
+    let contains = [sol] in
+    let location =
+      {
+        no;
+        id;
+        contains;
+      } in
+      LocationMap.add key location  loc_map
 
+let dispense loc_1 loc_2 loc_map =
+  let no = (retrieve_location loc_2 loc_map).no in
+    let key = no in
+    let id = (retrieve_location loc_2 loc_map).id in
+    let contains = (retrieve_location loc_1 loc_map).contains @ (retrieve_location loc_1 loc_map).contains  in
+    let location = {
+    no;
+    id;
+    contains;
+  } in
+ LocationMap.add key location loc_map
 
-
+let print_peptide (x: peptide) = print_string (String.concat "" (List.map (fun x -> String.make 1 x.one_letter_code) x.sequence))
 
 let print_env (env : env) : unit =
   (* Print peptides *)
@@ -240,6 +258,11 @@ let print_env (env : env) : unit =
         print_int key;
         print_string " : ";
         print_int value.id;
+        print_string " : ";
+        List.iter (fun x -> print_string(string_of_float x.concentration )) value.contains;
+        print_string " : ";
+        List.iter (fun x -> print_peptide x.solute  )value.contains;
+        print_string " : ";
         print_newline();
 
       ) env.locations

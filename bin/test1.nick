@@ -3,6 +3,29 @@ solvent water;
 
 solution x = a ( 0.1 mM ) in water;
 
+peptide b = <HESSAMISEPIC>;
+solution y = b ( 0.1 mM) in water;
+
+peptide c = <ARCHYISEPIC>;
+solution z = c ( 0.1 mM) in water;
+
+
 location 1;
 
-location 2
+location 1 contains x;
+
+location 2;
+
+location 2 contains y;
+
+location 3;
+
+location 3 contains z;
+
+location 4;
+
+dispense location 1 to location 4;
+
+dispense location 2 to location 4;
+
+dispense location 3 to location 4

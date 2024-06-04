@@ -34,6 +34,7 @@ rule token = parse
   | "call"          {CALL}
   | "location"      {LOCATION}
   | "contains"      {CONTAINS}
+  | "to"            {TO}
   | "("             { LPAREN }
   | ")"             { RPAREN }
   | ';' 		        { SEMICOLON }

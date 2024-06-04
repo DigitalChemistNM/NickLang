@@ -23,4 +23,6 @@ let rec eval_expr (e : expression)(env : env): env =
   | Combine (v1, v2, v3) -> print_string "Combine "; print_string v1; print_string " "; print_string v2; print_string " "; print_string v3; print_newline()
   | Agitate (v, i) -> print_string "Agitate "; print_string v; print_string " "; print_int i; print_newline()
   | Print -> print_maps()*)
+  | Contains(a, b) -> {env with locations = add_solutions_to_location (find_solution_by_name b env.solutions) a  env.locations }
+  | Dispense(a,b) -> {env with locations = dispense a b env.locations }
   | _ -> env

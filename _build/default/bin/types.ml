@@ -39,7 +39,7 @@ type solution = {
 }
 
 type location = {
-  name: int;
+  no: int;
   id : int;
   contains: solution list
 }
@@ -57,7 +57,7 @@ type expression =
   | CalculateAverageMass of string
   | GenerateSmiles of string
   | Protocol of string * arglist * expression
-  | Dispense of string
+  | Dispense of int * int
   | FindLocation of string
   | Combine of string * string * string
   | Agitate of string * int

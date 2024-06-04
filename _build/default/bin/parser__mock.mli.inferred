@@ -1,5 +1,6 @@
 type token =
-    SOLVENT
+    TO
+  | SOLVENT
   | SOLUTION
   | SEMICOLON
   | RPAREN
