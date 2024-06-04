@@ -160,11 +160,21 @@ let add_protocol protocol map =
   let key = protocol.name in
   ProtocolMap.add key protocol map
 
-let retrieve__protocol name map =
+let retrieve_protocol name map =
   try
     ProtocolMap.find name map
   with
   | Not_found -> raise Not_found
+
+let bind_arg env argname callname =
+  let solution = find_solution_by_name callname env.solutions in
+  let smap = SolutionMap.add argname solution env.solutions in
+  {env with solutions = smap}
+
+ let bind_args env pid pargs =
+  let p = retrieve_protocol pid env.protocols in
+  let bargs = List.fold_left2 (fun  acc a i -> bind_arg acc a i    ) env (arglist_to_lst p.arglist) pargs in
+  bargs
 
 
 let print_env (env : env) : unit =

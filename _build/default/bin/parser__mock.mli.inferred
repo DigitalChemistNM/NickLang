@@ -35,6 +35,7 @@ type token =
   | AGITATE
 val menhir_begin_marker : int
 val xv_toplevel : Types.expression
+val xv_list_ID_ : string list
 val xv_expression : Types.expression
 val xv_arglist : Types.arglist
 val menhir_end_marker : int

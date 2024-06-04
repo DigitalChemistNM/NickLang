@@ -13,10 +13,12 @@ let rec eval_expr (e : expression)(env : env): env =
   (* | CalculateAverageMass (s) -> let x = calculate_mass s in print_float x; print_newline()*)
   (*| GenerateSmiles (s) -> let x = generate_smiles s in print_string x; print_newline()*)
   | Protocol (s, a, e) -> {env with protocols = add_protocol(create_protocol s a e) env.protocols  }
-  | Call(s) -> let env' = eval_expr(retrieve__protocol s env.protocols).expressions env in eval_expr(retrieve__protocol s env.protocols).expressions env'
+  | Call(s, args) ->  (let env' = bind_args env s args in
+    let p = retrieve_protocol s env.protocols in
+    let _  =  eval_expr p.expressions env' in env)
   (*| Dispense (v) -> print_string "Dispense "; print_string v; print_newline()
-  | FindLocation(v) -> print_string "FindLocation "; print_string v; print_newline() 
-  | Combine (v1, v2, v3) -> print_string "Combine "; print_string v1; print_string " "; print_string v2; print_string " "; print_string v3; print_newline()
-  | Agitate (v, i) -> print_string "Agitate "; print_string v; print_string " "; print_int i; print_newline()
+    | FindLocation(v) -> print_string "FindLocation "; print_string v; print_newline()*)
+  | Combine (_a,_b) -> let _ =  print_env env in env
+  (*| Agitate (v, i) -> print_string "Agitate "; print_string v; print_string " "; print_int i; print_newline()
   | Print -> print_maps()*)
   | _ -> env

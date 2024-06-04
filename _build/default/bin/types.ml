@@ -41,6 +41,11 @@ type arglist =
  | EmptyArglist
  | Arglist of string * arglist
 
+let rec arglist_to_lst args =
+  match args with
+  | EmptyArglist -> []
+  | Arglist(s,l) -> s :: (arglist_to_lst l)
+
 type expression =
   | Sequence of expression * expression
   | Peptide of string * string
@@ -52,10 +57,10 @@ type expression =
   | Protocol of string * arglist * expression
   | Dispense of string
   | FindLocation of string
-  | Combine of string * string * string
+  | Combine of string * string
   | Agitate of string * int
   | Print
-  | Call of string
+  | Call of string * string list
 
 
 type protocol ={
