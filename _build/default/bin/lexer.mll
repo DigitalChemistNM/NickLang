@@ -32,6 +32,8 @@ rule token = parse
   | "minutes"       {MINUTES}
   | "print"         {PRINT}
   | "call"          {CALL}
+  | "location"      {LOCATION}
+  | "contains"      {CONTAINS}
   | "("             { LPAREN }
   | ")"             { RPAREN }
   | ';' 		        { SEMICOLON }

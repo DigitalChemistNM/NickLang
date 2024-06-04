@@ -28,6 +28,7 @@
 %token GENERATE_SMILES
 %token PRINT
 %token CALL
+%token CONTAINS
 %token LPAREN
 %token RPAREN
 %token LBRACE
@@ -76,3 +77,5 @@ expression:
 | AGITATE var = ID FOR var2 = NUMERAL MINUTES {Agitate(var, var2)}
 | PRINT {Print}
 | CALL var = ID {Call(var)}
+| LOCATION var = NUMERAL{Location(var)}
+| var = NUMERAL CONTAINS var2 = ID{Contains(var,var2)}

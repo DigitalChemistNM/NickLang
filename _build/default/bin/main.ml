@@ -8,7 +8,8 @@ let () =
     peptides = PepMap.empty;
     solvents = SolventMap.empty;
     solutions = SolutionMap.empty;
-    protocols = ProtocolMap.empty
+    protocols = ProtocolMap.empty;
+    locations = LocationMap.empty
   } in
 
   let lexbuf = Lexing.from_channel stdin in

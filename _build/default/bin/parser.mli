@@ -30,6 +30,7 @@ type token =
   | EQUAL
   | EOF
   | DISPENSE
+  | CONTAINS
   | COMBINE
   | CALL
   | CALCULATE_AVERAGE_MASS

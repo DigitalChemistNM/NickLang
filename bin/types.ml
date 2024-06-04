@@ -35,6 +35,13 @@ type solution = {
   solute: peptide;
   solvent: solvent;
   concentration: float;
+
+}
+
+type location = {
+  name: int;
+  id : int;
+  contains: solution list
 }
 
 type arglist =
@@ -56,6 +63,8 @@ type expression =
   | Agitate of string * int
   | Print
   | Call of string
+  | Location of int
+  | Contains of int * string
 
 
 type protocol ={
@@ -103,12 +112,21 @@ module ProtocolKey =
 
 module ProtocolMap = Map.Make(ProtocolKey)
 
+module LocationKey =
+  struct
+    type t = int
+    let compare = compare
+  end
+
+module LocationMap = Map.Make(LocationKey)
+
 
 type env = {
 
   peptides : peptide PepMap.t;
   solvents : solvent SolventMap.t;
   solutions : solution SolutionMap.t;
-  protocols : protocol ProtocolMap.t
+  protocols : protocol ProtocolMap.t;
+  locations : location LocationMap.t
 
 }

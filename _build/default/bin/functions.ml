@@ -166,6 +166,31 @@ let retrieve__protocol name map =
   with
   | Not_found -> raise Not_found
 
+let add_location name map =
+  let key = name in
+  let id = Random.int 1000 in
+  let location =
+  {
+    name;
+    id;
+    contains = []
+  } in
+  LocationMap.add key location map
+
+let retrieve_location name map =
+  try
+    LocationMap.find name map
+  with
+  | Not_found -> raise Not_found
+
+(**let add_solution_to_location  solution_name location_name loc_map sol_map =
+  let location = retrieve_location location_name loc_map in
+  let solution = find_solution_by_name solution_name sol_map in
+  let lst = [solution] in
+   location.solutions = location.solutions @ lst*)
+
+
+
 
 let print_env (env : env) : unit =
   (* Print peptides *)
@@ -207,4 +232,14 @@ let print_env (env : env) : unit =
     print_string " : ";
     print_string value.name;
     print_newline();
-     )  env.protocols
+     )  env.protocols;
+
+  (*print Locations*)
+  print_endline "Locations:";
+    LocationMap.iter (fun key (value: location) ->
+        print_int key;
+        print_string " : ";
+        print_int value.id;
+        print_newline();
+
+      ) env.locations

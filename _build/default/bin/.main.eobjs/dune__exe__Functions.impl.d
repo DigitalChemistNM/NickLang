@@ -1,1 +1,1 @@
-bin/functions.ml: Aminoacids List PepMap ProtocolMap SolutionMap SolventMap Solvents String Types
+bin/functions.ml: Aminoacids List LocationMap PepMap ProtocolMap Random SolutionMap SolventMap Solvents String Types
