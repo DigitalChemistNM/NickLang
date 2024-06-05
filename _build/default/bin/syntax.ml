@@ -7,9 +7,10 @@ let rec eval_expr (e : expression)(env : env): env =
   match e with
   | Sequence (e1, e2) -> let env' = eval_expr e1 env in eval_expr e2 env'
   | Peptide (s, t) -> {env with peptides = add_peptide s t env.peptides}
-  (*| Molecule (s, t) -> print_string s; print_string " "; print_string t; print_newline()*)
+  | Molecule (_s, _t) -> let _ =  print_env env in env
   | Solvent (s)  -> {env with solvents = add_solvent s env.solvents}
   | Solution (a, b, c, d) ->{env with solutions = add_solution a b c d env.peptides env.solvents  env.solutions}
+  | Molsolution (a, b, c, d) -> {env with mol_solutions = add_mol_solution a b c d env.molecules env.solvents env.mol_solutions }
   (* | CalculateAverageMass (s) -> let x = calculate_mass s in print_float x; print_newline()*)
   (*| GenerateSmiles (s) -> let x = generate_smiles s in print_string x; print_newline()*)
   | Protocol (s, a, e) -> {env with protocols = add_protocol(create_protocol s a e) env.protocols  }

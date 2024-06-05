@@ -12,6 +12,7 @@ type token =
   | PEPTIDE
   | PEPID of (string)
   | NUMERAL of (int)
+  | MOLSOLUTION
   | MOLID of (string)
   | MOLECULE
   | MM

@@ -12,6 +12,7 @@
 %token MOLECULE
 %token SOLVENT
 %token SOLUTION
+%token MOLSOLUTION
 %token PROTOCOL
 %token DISPENSE
 %token FIND
@@ -67,6 +68,7 @@ expression:
 | MOLECULE var = ID EQUAL LPAREN var2 = MOLID RPAREN {Molecule (var, var2)}
 | SOLVENT var = ID {Solvent var}
 | SOLUTION var = ID EQUAL var2 = ID LPAREN var3 = FLOAT MM RPAREN IN var4 = ID {Solution (var, var2, var3, var4)}
+| MOLSOLUTION var = ID EQUAL var2 = ID LPAREN var3 = FLOAT MM RPAREN IN var4 = ID {Molsolution (var, var2, var3, var4)}
 | CALCULATE_AVERAGE_MASS LT var = PEPID GT {CalculateAverageMass (var)}
 | GENERATE_SMILES LT var = PEPID GT {GenerateSmiles (var)} 
 | PROTOCOL var = ID args = arglist LBRACE body = expression RBRACE   {Protocol (var, args, body)}

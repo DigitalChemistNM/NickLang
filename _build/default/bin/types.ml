@@ -21,6 +21,19 @@ type amino_acid =
     smiles: string;
   }
 
+type molecule = {
+
+   name: string;
+   monoisotopic_mass : float;
+   average_mass : float;
+   formula: string;
+   smiles: string
+  }
+
+type dissolved_compound =
+  | Peptide of peptide * float
+  | Molecule of molecule * float
+
 
 
 type solvent = 
@@ -29,13 +42,29 @@ type solvent =
     formula: string;
     protic: bool; 
     polar: bool;
- } 
+ }
+
 
 type solution = {
   solute: peptide;
   solvent: solvent;
   concentration: float;
 }
+
+type mol_solution = {
+  solute: molecule;
+  solvent: solvent;
+  concentration: float;
+}
+
+
+type super_solution = {
+
+  solutes : dissolved_compound list;
+  solvents : solvent list;
+
+}
+
 
 type arglist =
  | EmptyArglist
@@ -52,6 +81,7 @@ type expression =
   | Molecule of string * string
   | Solvent of string
   | Solution of string * string * float * string
+  | Molsolution of string * string * float * string
   | CalculateAverageMass of string
   | GenerateSmiles of string
   | Protocol of string * arglist * expression
@@ -108,12 +138,29 @@ module ProtocolKey =
 
 module ProtocolMap = Map.Make(ProtocolKey)
 
+module MoleculeKey =
+  struct
+    type t = string
+    let compare = compare
+  end
+
+module MoleculeMap = Map.Make(MoleculeKey)
+
+module MolsolutionKey =
+  struct
+    type t = string
+    let compare = compare
+  end
+
+module MolsolutionMap = Map.Make(MolsolutionKey)
 
 type env = {
 
   peptides : peptide PepMap.t;
+  molecules : molecule MoleculeMap.t;
   solvents : solvent SolventMap.t;
   solutions : solution SolutionMap.t;
+  mol_solutions : mol_solution MolsolutionMap.t;
   protocols : protocol ProtocolMap.t
 
 }

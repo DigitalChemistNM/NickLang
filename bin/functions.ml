@@ -132,7 +132,7 @@ let add_solution name solute concentration solvent map1 map2 map3 =
   let solvent = find_solvent_by_name solvent map2 in
   let concentration = concentration in
   let key = name in 
-  let solution ={
+  let solution: solution ={
     solute;
     solvent;
     concentration;
@@ -144,6 +144,37 @@ let find_solution_by_name name map =
     SolutionMap.find name map
   with 
     | Not_found -> raise Not_found
+
+let add_molecule name formula  map =
+  let key = name in
+  let molecule =
+    {
+      name;
+      average_mass = 0.0;
+      monoisotopic_mass = 0.0;
+      formula;
+      smiles = "";
+    }
+    in
+  MoleculeMap.add key molecule map
+
+let find_molecule_by_name name map =
+  try
+    MoleculeMap.find name map
+  with
+   | Not_found -> raise Not_found
+
+let add_mol_solution name solute concentration solvent map1 map2 map3 =
+  let solute = find_molecule_by_name solute map1 in
+  let solvent = find_solvent_by_name solvent map2 in
+  let concentration = concentration in
+  let key = name in
+  let mol_solution : mol_solution  = {
+    solute;
+    solvent;
+    concentration;
+  } in
+  MolsolutionMap.add key (mol_solution : mol_solution) map3
 
 
 let create_protocol name arglist expressions =
@@ -173,7 +204,7 @@ let bind_arg env argname callname =
 
  let bind_args env pid pargs =
   let p = retrieve_protocol pid env.protocols in
-  let bargs = List.fold_left2 (fun  acc a i -> bind_arg acc a i    ) env (arglist_to_lst p.arglist) pargs in
+  let bargs = List.fold_left2 (fun  acc a i -> bind_arg acc a i) env (arglist_to_lst  p.arglist) pargs in
   bargs
 
 
@@ -198,7 +229,7 @@ let print_env (env : env) : unit =
 
   (* Print solutions *)
   print_endline "Solutions:";
-  SolutionMap.iter (fun key value ->
+  SolutionMap.iter (fun key (value : solution) ->
     print_string key;
     print_string " : ";
     print_string " ";

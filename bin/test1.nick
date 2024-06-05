@@ -1,6 +1,8 @@
 peptide a = <NICKISEPIC>;
 solvent water;
 
+molecule b = (C4H3NO2);
+
 solution x = a (0.1 mM) in water;
 
 solution y = a (0.1 mM) in water;
@@ -10,6 +12,7 @@ solution y = a (0.1 mM) in water;
 protocol conjugate p m {
 
 combine p and m
+
 
 };
 
