@@ -10,7 +10,7 @@ let find_amino_acid_by_one_letter_code c = List.find (fun aa -> aa.one_letter_co
 (*Same as above but for three letter code, this functionality isn't utilised yet*)
 
 let find_amino_acid_by_three_letter_code c amino_acid_list =
-  let aa = List.find (fun aa -> aa.one_letter_code = c) amino_acid_list in
+  let aa =find_amino_acid_by_one_letter_code c amino_acid_list in
     aa.three_letter_code
 
 
@@ -18,7 +18,7 @@ let find_amino_acid_by_three_letter_code c amino_acid_list =
 
 
 let find_average_mass_by_one_letter_code c amino_acid_list =
-  let aa = List.find (fun aa -> aa.one_letter_code = c) amino_acid_list in
+  let aa = find_amino_acid_by_one_letter_code c amino_acid_list in
     aa.average_mass
 
 
@@ -27,7 +27,7 @@ let find_average_mass_by_one_letter_code c amino_acid_list =
 
 
 let find_monoisotopic_mass_by_one_letter_code  c amino_acid_list =
-  let aa = List.find (fun aa -> aa.one_letter_code = c) amino_acid_list in
+  let aa = find_amino_acid_by_one_letter_code c amino_acid_list in
     aa.monoisotopic_mass
 
 
@@ -36,7 +36,7 @@ let find_monoisotopic_mass_by_one_letter_code  c amino_acid_list =
 
 
 let find_smiles_by_one_letter_code c amino_acid_list =
-  let aa = List.find (fun aa -> aa.one_letter_code = c) amino_acid_list in
+  let aa = find_amino_acid_by_one_letter_code c amino_acid_list in
     aa.smiles
 
 
@@ -89,19 +89,23 @@ let construct_sequence aa_sequence =
       smiles;
     }
 
-
+let create_solute (input : [> `PeptideInput of peptide | `MoleculeInput of molecule]) =
+  match input with
+  | `PeptideInput peptide -> Peptide (peptide)
+  | `MoleculeInput molecule -> Molecule (molecule)
 
 
 (*This function adds user declared peptides to map*)
 let add_peptide name sequence map  =
-  let peptide = construct_peptide sequence in 
+  let peptide = construct_peptide sequence in
+  let solute = create_solute(`PeptideInput peptide) in
   let key = name in 
-  PepMap.add key peptide map
+  SoluteMap.add key solute  map
 
   
-let find_peptide_by_name name map =
+let find_solute_by_name name map =
   try 
-    PepMap.find name map
+    SoluteMap.find name map
   with 
    | Not_found -> raise Not_found
 
@@ -127,17 +131,16 @@ let find_solvent_by_name name map =
 
 
 
-let add_solution name solute concentration solvent map1 map2 map3 =
-  let solute = find_peptide_by_name solute map1 in
-  let solvent = find_solvent_by_name solvent map2 in
-  let concentration = concentration in
-  let key = name in 
-  let solution: solution ={
-    solute;
-    solvent;
-    concentration;
-  } in  
-  SolutionMap.add key solution map3
+let add_solution name solute_list solvent_list  map1 map2 =
+  let solutes = List.map (fun (solute, concentration) -> (create_solute solute, concentration)) solute_list in
+  let solvents = List.map (fun solvent -> find_solute_by_name solvent map1 ) solvent_list in
+  let key = name in
+  let solution : solution = {
+    solutes;
+    solvents;
+    agitate = false;
+  } in
+  SolutionMap.add key solution map2
 
 let find_solution_by_name name map =
   try 
@@ -145,36 +148,25 @@ let find_solution_by_name name map =
   with 
     | Not_found -> raise Not_found
 
-let add_molecule name formula  map =
+let add_molecule name formula map =
   let key = name in
   let molecule =
     {
       name;
       average_mass = 0.0;
       monoisotopic_mass = 0.0;
-      formula;
+      formula ;
       smiles = "";
     }
     in
-  MoleculeMap.add key molecule map
+   let solute = create_solute(`MoleculeInput molecule) in
+  SoluteMap.add key solute map
 
 let find_molecule_by_name name map =
   try
-    MoleculeMap.find name map
+    SoluteMap.find name map
   with
    | Not_found -> raise Not_found
-
-let add_mol_solution name solute concentration solvent map1 map2 map3 =
-  let solute = find_molecule_by_name solute map1 in
-  let solvent = find_solvent_by_name solvent map2 in
-  let concentration = concentration in
-  let key = name in
-  let mol_solution : mol_solution  = {
-    solute;
-    solvent;
-    concentration;
-  } in
-  MolsolutionMap.add key (mol_solution : mol_solution) map3
 
 
 let create_protocol name arglist expressions =
@@ -197,6 +189,9 @@ let retrieve_protocol name map =
   with
   | Not_found -> raise Not_found
 
+
+
+
 let bind_arg env argname callname =
   let solution = find_solution_by_name callname env.solutions in
   let smap = SolutionMap.add argname solution env.solutions in
@@ -208,44 +203,24 @@ let bind_arg env argname callname =
   bargs
 
 
-let print_env (env : env) : unit =
-  (* Print peptides *)
-  print_endline "Peptides:";
-  PepMap.iter (fun key (value : peptide) ->
-    print_string key;
-    print_string " : ";
-    print_string (String.concat "" (List.map (fun x -> String.make 1 x.one_letter_code) value.sequence));
-    print_newline();
-  ) env.peptides;
+let print_solutes =
+  SoluteMap.iter (fun k _v -> print_endline k)
 
-  (* Print solvents *)
-  print_endline "Solvents:";
-  SolventMap.iter (fun key value ->
-    print_string key;
-     print_string " : ";
-     print_string value.solname;
-    print_newline();
-  ) env.solvents;
+let print_solutions =
+  SolutionMap.iter (fun k _v -> print_endline k)
 
-  (* Print solutions *)
-  print_endline "Solutions:";
-  SolutionMap.iter (fun key (value : solution) ->
-    print_string key;
-    print_string " : ";
-    print_string " ";
-    print_string (string_of_float value.concentration);
-    print_string " ";
-    print_string (String.concat "" (List.map (fun x -> String.make 1 x.one_letter_code) value.solute.sequence));
-    print_string " in ";
-    print_string value.solvent.solname;
-    print_newline();
-  ) env.solutions;
+let print_protocols =
+  ProtocolMap.iter (fun k _v -> print_endline k)
 
-  (*Print protocls*)
-  print_endline "Protocols:";
-  ProtocolMap.iter (fun key (value : protocol) ->
-    print_string key;
-    print_string " : ";
-    print_string value.name;
-    print_newline();
-     )  env.protocols
+let print_solvents =
+  SolventMap.iter (fun k _v -> print_endline k)
+
+let print_env = fun env ->
+  print_endline "SOLUTES";
+  print_solutes env.solutes;
+  print_endline "SOLUTIONS";
+  print_solutions env.solutions;
+  print_endline "PROTOCOLS";
+  print_protocols env.protocols;
+  print_endline "SOLVENTS";
+  print_solvents env.solvents

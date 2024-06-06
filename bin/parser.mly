@@ -33,6 +33,8 @@
 %token RPAREN
 %token LBRACE
 %token RBRACE
+%token LBRAC
+%token RBRAC
 %token EQUAL
 %token LT
 %token GT
@@ -59,16 +61,24 @@ arglist:
 | var = ID rest = arglist {Arglist(var, rest)}
 |  { EmptyArglist }
 
+sollist:
+|  LPAREN var = ID conc = FLOAT MM RPAREN  rest = sollist {Sollist(var, conc, rest)}
+|  { EmptySollist }
+
+solvnlist:
+| var = ID rest = solvnlist {Solvnlist(var, rest)}
+|  { EmptySolvnlist }
+
 
 
 
 expression: 
 | e1 = expression SEMICOLON e2 = expression {Sequence (e1, e2)}
-| PEPTIDE var = ID EQUAL LT var2 = PEPID GT {Peptide (var, var2)}
+| PEPTIDE var = ID EQUAL LT var2 = PEPID GT {Addpeptide (var, var2)}
 | MOLECULE var = ID EQUAL LPAREN var2 = MOLID RPAREN {Molecule (var, var2)}
 | SOLVENT var = ID {Solvent var}
-| SOLUTION var = ID EQUAL var2 = ID LPAREN var3 = FLOAT MM RPAREN IN var4 = ID {Solution (var, var2, var3, var4)}
-| MOLSOLUTION var = ID EQUAL var2 = ID LPAREN var3 = FLOAT MM RPAREN IN var4 = ID {Molsolution (var, var2, var3, var4)}
+| SOLUTION var = ID EQUAL LBRAC args1 = sollist RBRAC
+IN LBRAC args2= solvnlist RBRAC {Solution (var, args1, args2)}
 | CALCULATE_AVERAGE_MASS LT var = PEPID GT {CalculateAverageMass (var)}
 | GENERATE_SMILES LT var = PEPID GT {GenerateSmiles (var)} 
 | PROTOCOL var = ID args = arglist LBRACE body = expression RBRACE   {Protocol (var, args, body)}

@@ -16,6 +16,7 @@ rule token = parse
   | "molecule"      { MOLECULE }
   | "solvent"       { SOLVENT }
   | "solution"      {SOLUTION}
+  | "molsolution"   {MOLSOLUTION}
   | "in"            {IN}
   | "mM"            {MM}
   | "calculate_average_mass"  {CALCULATE_AVERAGE_MASS}
@@ -39,7 +40,9 @@ rule token = parse
   | "<"             { LT }
   | ">"             { GT }
   | "{"             { LBRACE }
-  | "}"             { RBRACE }
+  | "}"             { RBRACE}
+  | "["             {LBRAC}
+  | "]"             {RBRAC}
   | ['a'-'z']*      { ID (Lexing.lexeme lexbuf) }
   | ['A'- 'Z']*     { PEPID (Lexing.lexeme lexbuf) }
   | ['A'-'Z' '0'-'9']+  { MOLID (Lexing.lexeme lexbuf) }

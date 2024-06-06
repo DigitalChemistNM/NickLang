@@ -7,6 +7,7 @@ type token =
   | SEMICOLON
   | RPAREN
   | RBRACE
+  | RBRAC
   | PROTOCOL
   | PRINT
   | PEPTIDE
@@ -21,6 +22,7 @@ type token =
   | LPAREN
   | LOCATION
   | LBRACE
+  | LBRAC
   | IN
   | ID of (string)
   | GT

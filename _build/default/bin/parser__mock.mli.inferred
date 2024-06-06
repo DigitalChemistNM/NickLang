@@ -4,6 +4,7 @@ type token =
   | SEMICOLON
   | RPAREN
   | RBRACE
+  | RBRAC
   | PROTOCOL
   | PRINT
   | PEPTIDE
@@ -18,6 +19,7 @@ type token =
   | LPAREN
   | LOCATION
   | LBRACE
+  | LBRAC
   | IN
   | ID of string
   | GT
@@ -36,6 +38,8 @@ type token =
   | AGITATE
 val menhir_begin_marker : int
 val xv_toplevel : Types.expression
+val xv_solvnlist : Types.solvnlist
+val xv_sollist : Types.sollist
 val xv_list_ID_ : string list
 val xv_expression : Types.expression
 val xv_arglist : Types.arglist

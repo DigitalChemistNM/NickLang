@@ -5,12 +5,10 @@ open Functions
 
 let () =
   let initial_env = {
-    peptides = PepMap.empty;
+    solutes = SoluteMap.empty;
     solvents = SolventMap.empty;
     solutions = SolutionMap.empty;
     protocols = ProtocolMap.empty;
-    molecules = MoleculeMap.empty;
-    mol_solutions = MolsolutionMap.empty;
   } in
 
   let lexbuf = Lexing.from_channel stdin in

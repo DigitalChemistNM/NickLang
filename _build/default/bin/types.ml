@@ -30,13 +30,8 @@ type molecule = {
    smiles: string
   }
 
-type dissolved_compound =
-  | Peptide of peptide * float
-  | Molecule of molecule * float
 
-
-
-type solvent = 
+type solvent =
   {
     solname: string;
     formula: string;
@@ -44,31 +39,35 @@ type solvent =
     polar: bool;
  }
 
+type solute =
+  | Peptide of peptide
+  | Molecule of molecule
+
 
 type solution = {
-  solute: peptide;
-  solvent: solvent;
-  concentration: float;
-}
-
-type mol_solution = {
-  solute: molecule;
-  solvent: solvent;
-  concentration: float;
-}
-
-
-type super_solution = {
-
-  solutes : dissolved_compound list;
+  solutes  : (solute * float) list;
   solvents : solvent list;
-
+  agitate : bool;
 }
+
+
+type 'a input =
+  | PeptideInput of peptide
+  | MoleculeInput of molecule
+
 
 
 type arglist =
  | EmptyArglist
  | Arglist of string * arglist
+
+type sollist =
+  | EmptySollist
+  | Sollist of string * float * sollist
+
+type solvnlist =
+  | EmptySolvnlist
+  | Solvnlist of string * solvnlist
 
 let rec arglist_to_lst args =
   match args with
@@ -77,10 +76,10 @@ let rec arglist_to_lst args =
 
 type expression =
   | Sequence of expression * expression
-  | Peptide of string * string
+  | Addpeptide of string * string
   | Molecule of string * string
   | Solvent of string
-  | Solution of string * string * float * string
+  | Solution of string * sollist * solvnlist
   | Molsolution of string * string * float * string
   | CalculateAverageMass of string
   | GenerateSmiles of string
@@ -101,14 +100,14 @@ type protocol ={
 
 
  (*A map to keep track of peptide variables declared in scope*)
-module PepKey =
+module SoluteKey =
   struct
     type t = string
     let compare = compare
   end
 
 
-module PepMap = Map.Make(PepKey)
+module SoluteMap = Map.Make(SoluteKey)
 
 (*Same logic as above for solvents*)
   module SolventKey =
@@ -138,29 +137,12 @@ module ProtocolKey =
 
 module ProtocolMap = Map.Make(ProtocolKey)
 
-module MoleculeKey =
-  struct
-    type t = string
-    let compare = compare
-  end
-
-module MoleculeMap = Map.Make(MoleculeKey)
-
-module MolsolutionKey =
-  struct
-    type t = string
-    let compare = compare
-  end
-
-module MolsolutionMap = Map.Make(MolsolutionKey)
 
 type env = {
 
-  peptides : peptide PepMap.t;
-  molecules : molecule MoleculeMap.t;
+  solutes: solute SoluteMap.t;
   solvents : solvent SolventMap.t;
   solutions : solution SolutionMap.t;
-  mol_solutions : mol_solution MolsolutionMap.t;
   protocols : protocol ProtocolMap.t
 
 }
