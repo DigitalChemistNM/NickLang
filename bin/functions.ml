@@ -82,6 +82,7 @@ let construct_sequence aa_sequence =
     let average_mass = calculate_peptide_mass sequence in
     let monoisotopic_mass = calculate_peptide_monoisotopic_mass sequence in
     let smiles = generate_smiles sequence in
+    Peptide
     {
       sequence;
       average_mass;
@@ -89,25 +90,25 @@ let construct_sequence aa_sequence =
       smiles;
     }
 
-let create_solute (input : [> `PeptideInput of peptide | `MoleculeInput of molecule]) =
+(*let create_solute (input : [> `PeptideInput of peptide | `MoleculeInput of molecule]) =
   match input with
   | `PeptideInput peptide -> Peptide (peptide)
-  | `MoleculeInput molecule -> Molecule (molecule)
+  | `MoleculeInput molecule -> Molecule (molecule)*)
+
 
 
 (*This function adds user declared peptides to map*)
 let add_peptide name sequence map  =
   let peptide = construct_peptide sequence in
-  let solute = create_solute(`PeptideInput peptide) in
   let key = name in 
-  SoluteMap.add key solute  map
+  SoluteMap.add key peptide  map
 
   
-let find_solute_by_name name map =
-  try 
-    SoluteMap.find name map
-  with 
-   | Not_found -> raise Not_found
+(*let find_solute_by_name name map =
+  match SoluteMap.find_opt name map with
+  | Some solute -> solute
+   | None -> raise Not_found*)
+
 
 
 
@@ -131,16 +132,14 @@ let find_solvent_by_name name map =
 
 
 
-let add_solution name solute_list solvent_list  map1 map2 =
-  let solutes = List.map (fun (solute, concentration) -> (create_solute solute, concentration)) solute_list in
-  let solvents = List.map (fun solvent -> find_solute_by_name solvent map1 ) solvent_list in
+let add_solution name solute_list solvent_list map =
   let key = name in
   let solution : solution = {
-    solutes;
-    solvents;
+    solutes = solute_list;
+    solvents = solvent_list;
     agitate = false;
   } in
-  SolutionMap.add key solution map2
+  SolutionMap.add key solution map
 
 let find_solution_by_name name map =
   try 
@@ -148,9 +147,31 @@ let find_solution_by_name name map =
   with 
     | Not_found -> raise Not_found
 
+let combine_solutions name sol1 sol2 (map: solution SolutionMap.t) =
+  let solution_1 : solution = find_solution_by_name sol1 map in
+  let solution_2 : solution = find_solution_by_name sol2 map in
+  let solutes = solution_1.solutes @ solution_2.solutes in
+  let solvents = solution_1.solvents @ solution_2.solvents in
+  let solution : solution  = {
+    solutes;
+    solvents;
+    agitate = false;
+  } in
+  SolutionMap.add name solution map
+
+let agitate_solution (solname : string) (map : solution SolutionMap.t)  =
+  let solution = find_solution_by_name solname map in
+  let new_solution : solution = {
+    solutes = solution.solutes;
+    solvents = solution.solvents;
+    agitate = true;
+  } in
+  SolutionMap.add solname new_solution map
+
 let add_molecule name formula map =
   let key = name in
   let molecule =
+    Molecule
     {
       name;
       average_mass = 0.0;
@@ -159,14 +180,19 @@ let add_molecule name formula map =
       smiles = "";
     }
     in
-   let solute = create_solute(`MoleculeInput molecule) in
-  SoluteMap.add key solute map
+  SoluteMap.add key molecule map
 
 let find_molecule_by_name name map =
   try
     SoluteMap.find name map
   with
    | Not_found -> raise Not_found
+
+let find_solute_by_name name map =
+  try
+    SoluteMap.find name map
+  with
+  | Not_found -> raise Not_found
 
 
 let create_protocol name arglist expressions =

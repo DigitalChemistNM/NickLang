@@ -16,7 +16,6 @@ rule token = parse
   | "molecule"      { MOLECULE }
   | "solvent"       { SOLVENT }
   | "solution"      {SOLUTION}
-  | "molsolution"   {MOLSOLUTION}
   | "in"            {IN}
   | "mM"            {MM}
   | "calculate_average_mass"  {CALCULATE_AVERAGE_MASS}

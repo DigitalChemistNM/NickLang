@@ -13,7 +13,6 @@ type token =
   | PEPTIDE
   | PEPID of (string)
   | NUMERAL of (int)
-  | MOLSOLUTION
   | MOLID of (string)
   | MOLECULE
   | MM
@@ -25,6 +24,7 @@ type token =
   | LBRAC
   | IN
   | ID of (string)
+  | HOURS
   | GT
   | GENERATE_SMILES
   | FOR

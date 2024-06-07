@@ -44,6 +44,12 @@ type solute =
   | Molecule of molecule
 
 
+(*type 'a input =
+  | PeptideInput of peptide
+   | MoleculeInput of molecule*)
+
+(*type solute_input = solute input*)
+
 type solution = {
   solutes  : (solute * float) list;
   solvents : solvent list;
@@ -51,9 +57,6 @@ type solution = {
 }
 
 
-type 'a input =
-  | PeptideInput of peptide
-  | MoleculeInput of molecule
 
 
 
@@ -77,7 +80,7 @@ let rec arglist_to_lst args =
 type expression =
   | Sequence of expression * expression
   | Addpeptide of string * string
-  | Molecule of string * string
+  | Addmolecule of string * string
   | Solvent of string
   | Solution of string * sollist * solvnlist
   | Molsolution of string * string * float * string
@@ -86,8 +89,8 @@ type expression =
   | Protocol of string * arglist * expression
   | Dispense of string
   | FindLocation of string
-  | Combine of string * string
-  | Agitate of string * int
+  | Combine of string * string * string
+  | Agitate of string
   | Print
   | Call of string * string list
 

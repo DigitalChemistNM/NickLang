@@ -12,7 +12,6 @@
 %token MOLECULE
 %token SOLVENT
 %token SOLUTION
-%token MOLSOLUTION
 %token PROTOCOL
 %token DISPENSE
 %token FIND
@@ -24,6 +23,7 @@
 %token AGITATE
 %token FOR
 %token MINUTES
+%token HOURS
 %token MM
 %token CALCULATE_AVERAGE_MASS
 %token GENERATE_SMILES
@@ -62,7 +62,7 @@ arglist:
 |  { EmptyArglist }
 
 sollist:
-|  LPAREN var = ID conc = FLOAT MM RPAREN  rest = sollist {Sollist(var, conc, rest)}
+|   var = ID LPAREN conc = FLOAT MM RPAREN  rest = sollist {Sollist(var, conc, rest)}
 |  { EmptySollist }
 
 solvnlist:
@@ -75,16 +75,16 @@ solvnlist:
 expression: 
 | e1 = expression SEMICOLON e2 = expression {Sequence (e1, e2)}
 | PEPTIDE var = ID EQUAL LT var2 = PEPID GT {Addpeptide (var, var2)}
-| MOLECULE var = ID EQUAL LPAREN var2 = MOLID RPAREN {Molecule (var, var2)}
+| MOLECULE var = ID EQUAL LPAREN var2 = MOLID RPAREN {Addmolecule (var, var2)}
 | SOLVENT var = ID {Solvent var}
 | SOLUTION var = ID EQUAL LBRAC args1 = sollist RBRAC
 IN LBRAC args2= solvnlist RBRAC {Solution (var, args1, args2)}
+| var = ID EQUAL COMBINE var2 = ID AND var3 = ID {Combine(var, var2, var3)}
 | CALCULATE_AVERAGE_MASS LT var = PEPID GT {CalculateAverageMass (var)}
 | GENERATE_SMILES LT var = PEPID GT {GenerateSmiles (var)} 
 | PROTOCOL var = ID args = arglist LBRACE body = expression RBRACE   {Protocol (var, args, body)}
+| AGITATE var = ID {Agitate(var)}
 | DISPENSE var = ID {Dispense var}
 | var = ID EQUAL FIND LOCATION {FindLocation(var)}
-| COMBINE var = ID AND var2 = ID {Combine(var, var2)}
-| AGITATE var = ID FOR var2 = NUMERAL MINUTES {Agitate(var, var2)}
 | PRINT {Print}
 | CALL var = ID args = list(ID)  {Call(var, args)}
