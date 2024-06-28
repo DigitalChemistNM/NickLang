@@ -4,7 +4,6 @@
 
 
 
-
 rule token = parse 
 	| [' ' '\t' '\r'] { token lexbuf }
   | '\n'            { Lexing.new_line lexbuf; token lexbuf }
@@ -42,7 +41,7 @@ rule token = parse
   | "}"             { RBRACE}
   | "["             {LBRAC}
   | "]"             {RBRAC}
-  | ['a'-'z']*      { ID (Lexing.lexeme lexbuf) }
+  | ['a'-'z']*     { ID (Lexing.lexeme lexbuf) }
   | ['A'- 'Z']*     { PEPID (Lexing.lexeme lexbuf) }
-  | ['A'-'Z' '0'-'9']+  { MOLID (Lexing.lexeme lexbuf) }
+  | ['a'-'z' 'A'-'Z' '0'-'9']*   { MOLID (Lexing.lexeme lexbuf) }
   | eof             { EOF }
