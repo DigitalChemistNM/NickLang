@@ -37,3 +37,18 @@ protocol conjugate p m location {
 
     
 }
+
+
+molecule sodiumchloride = (NaCl);
+
+molecule pottasiumchloride = (KCl);
+
+molecule sodiumphosphatedibasic = (Na2HPO4);
+
+molecule potassiumphosphatemonobasic = (KH2PO4);
+
+solvent water;
+
+solvent dmso;
+
+peptide a = <NICKISEPIC>

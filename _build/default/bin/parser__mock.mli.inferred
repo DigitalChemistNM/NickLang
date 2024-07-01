@@ -1,0 +1,46 @@
+type token =
+    SOLVENT
+  | SOLUTION
+  | SEMICOLON
+  | RPAREN
+  | RBRACE
+  | RBRAC
+  | PROTOCOL
+  | PRINT
+  | PEPTIDE
+  | PEPID of string
+  | NUMERAL of int
+  | MOLID of string
+  | MOLECULE
+  | MM
+  | MINUTES
+  | LT
+  | LPAREN
+  | LOCATION
+  | LBRACE
+  | LBRAC
+  | IN
+  | ID of string
+  | HOURS
+  | GT
+  | GENERATE_SMILES
+  | FOR
+  | FLOAT of float
+  | FIND
+  | EQUAL
+  | EOF
+  | DISPENSE
+  | COMBINE
+  | CALL
+  | CALCULATE_AVERAGE_MASS
+  | AT
+  | AND
+  | AGITATE
+val menhir_begin_marker : int
+val xv_toplevel : Types.expression
+val xv_solvnlist : Types.solvnlist
+val xv_sollist : Types.sollist
+val xv_list_ID_ : string list
+val xv_expression : Types.expression
+val xv_arglist : Types.arglist
+val menhir_end_marker : int
