@@ -1,6 +1,6 @@
 open Types
-open Aminoacids 
-open Solvents 
+open Aminoacids
+open Solvents
 
 (*Neccesary to fetch an amino acid from a one letter code input from a sequence*)
 
@@ -55,17 +55,17 @@ let calculate_peptide_monoisotopic_mass sequence =
 (*This function is neccesary for combing smiles strings of amino acids to form the smiles string of a peptide
   This is because there is a loss of water molecule in the condensations reaction of amino acids
   i.e the "O" is taken off the smiles string, hydrogens are ommitted in smiles representation*)
-  let remove_last_char str = 
-    let len = String.length str in 
-    let new_str = String.sub str 0 (len - 1) in 
-    new_str 
-  
+  let remove_last_char str =
+    let len = String.length str in
+    let new_str = String.sub str 0 (len - 1) in
+    new_str
+
 
 let generate_smiles sequence =
   let smiles = List.fold_left(fun acc aa -> acc  ^ remove_last_char(find_smiles_by_one_letter_code aa.one_letter_code natural_amino_acids)) ""  sequence in
   smiles ^ "O"
 
-  
+
 (*This function constructs a sequence, which is a list of amino_acids, from an string input of just the one letter code*)
 
 let construct_sequence aa_sequence =
@@ -99,10 +99,10 @@ let construct_sequence aa_sequence =
 (*This function adds user declared peptides to map*)
 let add_peptide name sequence map  =
   let peptide = construct_peptide sequence in
-  let key = name in 
+  let key = name in
   SoluteMap.add key peptide  map
 
-  
+
 (*let find_solute_by_name name map =
   match SoluteMap.find_opt name map with
   | Some solute -> solute
@@ -114,7 +114,7 @@ let add_peptide name sequence map  =
 let find_solvent_from_list name  =
   try
   List.find (fun x -> x.solname = name) solvent_list
-  with 
+  with
   | Not_found -> raise Not_found
 
 let add_solvent name map =
@@ -141,9 +141,9 @@ let add_solution name solute_list solvent_list map =
   SolutionMap.add key solution map
 
 let find_solution_by_name name map =
-  try 
+  try
     SolutionMap.find name map
-  with 
+  with
     | Not_found -> raise Not_found
 
 let combine_solutions name sol1 sol2 (map: solution SolutionMap.t) =
@@ -231,7 +231,7 @@ let bind_arg env argname callname =
 
 let print_peptide peptide =
   List.iter (fun a -> print_char a.one_letter_code) peptide.sequence;
-  print_newline ()
+  print_newline()
 
 let print_molecule (molecule : molecule) =
   Printf.printf "%s: %s\n" molecule.name molecule.formula
@@ -282,4 +282,4 @@ let print_env env =
   print_newline ();
   print_endline "SOLVENTS:";
   print_solvents env.solvents;
-  print_newline ()
+   print_newline ()

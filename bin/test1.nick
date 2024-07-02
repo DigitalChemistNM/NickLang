@@ -12,4 +12,27 @@ solution y = [b(0.1 mM)] in [dmso];
 
 z = combine x and y;
 
-agitate z
+agitate z;
+
+molecule malemide = (C4H3NO2);
+
+molecule sodiumchloride = (NaCl);
+
+molecule pottasiumchloride = (KCl);
+
+molecule sodiumphosphatedibasic = (Na2HPO4);
+
+molecule potassiumphosphatemonobasic = (KH2PO4);
+
+solvent water;
+
+solvent dmso;
+
+peptide a = <NICKISEPIC>;
+
+solution x = [malemide(10.0 mM)] in [dmso];
+
+solution y = [a(1.0 mM) sodiumchloride(137.0 mM) pottasiumchloride(2.7 mM)
+sodiumphosphatedibasic(10.0 mM) potassiumphosphatemonobasic(1.8 mM) ]  in [water];
+
+z = combine x and y
