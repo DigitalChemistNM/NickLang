@@ -22,6 +22,7 @@ let find_average_mass_by_one_letter_code c amino_acid_list =
     aa.average_mass
 
 
+
 (*Same as above but for the monoisotopic mass*)
 
 
@@ -230,18 +231,19 @@ let bind_arg env argname callname =
   bargs
 
 
+let print_solutes =
+  SoluteMap.iter (fun k _v -> print_endline k)
 
-let print_peptide peptide =
-  List.iter (fun a -> print_char a.one_letter_code) peptide.sequence;
-  print_newline ()
+let print_solutions =
+  SolutionMap.iter (fun k _v -> print_endline k)
 
-let print_molecule (molecule : molecule) =
-  Printf.printf "%s: %s\n" molecule.name molecule.formula
+let print_protocols =
+  ProtocolMap.iter (fun k _v -> print_endline k)
 
-let print_solute = function
-  | Peptide p -> print_peptide p
-  | Molecule m -> print_molecule m
+let print_solvents =
+  SolventMap.iter (fun k _v -> print_endline k)
 
+<<<<<<< HEAD
 let print_solvent (solvent : solvent) =
   print_endline solvent.solname
 
@@ -274,14 +276,14 @@ let print_solvents map =
 
 let print_env env =
   print_endline "SOLUTES:";
+=======
+let print_env = fun env ->
+  print_endline "SOLUTES";
+>>>>>>> parent of f1cf016 (cleaned up print_env)
   print_solutes env.solutes;
-  print_newline ();
-  print_endline "SOLUTIONS:";
+  print_endline "SOLUTIONS";
   print_solutions env.solutions;
-  print_newline ();
-  print_endline "PROTOCOLS:";
+  print_endline "PROTOCOLS";
   print_protocols env.protocols;
-  print_newline ();
-  print_endline "SOLVENTS:";
-  print_solvents env.solvents;
-  print_newline ()
+  print_endline "SOLVENTS";
+  print_solvents env.solvents

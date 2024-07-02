@@ -39,9 +39,7 @@ let rec eval_expr (e : expression)(env : env): env =
   | Protocol (s, a, e) -> {env with protocols = add_protocol(create_protocol s a e) env.protocols  }
   | Call(s, args) ->  (let env' = bind_args env s args in
     let p = retrieve_protocol s env.protocols in
-    let _  =  eval_expr p.expressions env' in
-    let _ =print_endline ("Temporary environment: "); print_env env in
-         env)
+    let _  =  eval_expr p.expressions env' in env)
   (*| Dispense (v) -> print_string "Dispense "; print_string v; print_newline()
     | FindLocation(v) -> print_string "FindLocation "; print_string v; print_newline()*)
   (*| Agitate (v, i) -> print_string "Agitate "; print_string v; print_string " "; print_int i; print_newline()
