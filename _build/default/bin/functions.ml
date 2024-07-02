@@ -167,6 +167,8 @@ let agitate_solution (solname : string) (map : solution SolutionMap.t)  =
   } in
   SolutionMap.add solname new_solution map
 
+
+
 let add_molecule name formula map =
   let key = name in
   let molecule =
@@ -249,7 +251,7 @@ let print_solution (solution : solution) =
     Printf.printf "concentration: %.2f, " conc
   ) solution.solutes;
   List.iter print_solvent solution.solvents;
-  Printf.printf "agitating: %b\n" solution.agitate
+  print_string (string_of_bool solution.agitate)
 
 let print_solutes map =
   SoluteMap.iter (fun k v ->

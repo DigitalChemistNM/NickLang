@@ -29,6 +29,7 @@ rule token = parse
   | "agitate"          {AGITATE}
   | "for"           {FOR}
   | "minutes"       {MINUTES}
+  | "hours"         {HOURS}
   | "print"         {PRINT}
   | "call"          {CALL}
   | "("             { LPAREN }
